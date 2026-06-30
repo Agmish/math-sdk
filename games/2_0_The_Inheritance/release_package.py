@@ -20,6 +20,7 @@ LIBRARY_DIR = GAME_DIR / "library"
 PUBLISH_DIR = LIBRARY_DIR / "publish_files"
 PROFILE_ROOT = LIBRARY_DIR / "rtp_profiles"
 CONFIG_DIR = LIBRARY_DIR / "configs"
+FORCES_DIR = LIBRARY_DIR / "forces"
 RELEASE_ROOT = LIBRARY_DIR / "release"
 
 GAME_ID = "2_0_The_Inheritance"
@@ -47,6 +48,50 @@ def copy_required(source: Path, destination: Path) -> None:
     shutil.copy2(require_file(source), destination)
 
 
+def _read_json(path: Path) -> dict[str, Any]:
+    with require_file(path).open(encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def _file_record(path: Path) -> dict[str, Any]:
+    require_file(path)
+    return {
+        "file": path.name,
+        "bytes": path.stat().st_size,
+        "sha256": sha256(path),
+    }
+
+
+def _force_files(config: dict[str, Any]) -> dict[str, str]:
+    """Return every force artifact referenced by a generated config file."""
+    references: dict[str, str] = {}
+    standard = config.get("standardForceFile")
+    if isinstance(standard, dict) and standard.get("file") and standard.get("sha256"):
+        references[str(standard["file"])] = str(standard["sha256"])
+
+    for mode_config in config.get("bookShelfConfig", []):
+        force_file = mode_config.get("forceFile")
+        if isinstance(force_file, dict) and force_file.get("file") and force_file.get("sha256"):
+            references[str(force_file["file"])] = str(force_file["sha256"])
+    return references
+
+
+def _find_force_source(filename: str, profile_dir: Path) -> Path:
+    """Locate a generated force file without guessing its contents."""
+    candidates = (
+        profile_dir / filename,
+        FORCES_DIR / filename,
+        CONFIG_DIR / filename,
+        PUBLISH_DIR / filename,
+        LIBRARY_DIR / filename,
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    locations = ", ".join(str(candidate) for candidate in candidates)
+    raise FileNotFoundError(f"Force artifact {filename} was referenced but not found. Checked: {locations}")
+
+
 def _copy_profile_files(profile_dir: Path, release_dir: Path) -> None:
     profile_files = [
         "config.json",
@@ -59,12 +104,12 @@ def _copy_profile_files(profile_dir: Path, release_dir: Path) -> None:
     for filename in profile_files:
         copy_required(profile_dir / filename, release_dir / filename)
 
-    # config.json refers to fe_config.json. Keep the SDK-named file too, and
-    # add this exact alias so the package is internally resolvable.
+    # config.json references fe_config.json, while the SDK also generates a
+    # game-named frontend config. Preserve both and validate the alias hash.
     copy_required(profile_dir / f"config_fe_{GAME_ID}.json", release_dir / "fe_config.json")
 
 
-def _copy_shared_files(release_dir: Path) -> None:
+def _copy_shared_files(profile_dir: Path, release_dir: Path) -> None:
     for mode in MODES:
         copy_required(PUBLISH_DIR / f"books_{mode}.jsonl.zst", release_dir / f"books_{mode}.jsonl.zst")
 
@@ -75,63 +120,70 @@ def _copy_shared_files(release_dir: Path) -> None:
             release_dir / f"books_{mode}.verification.json",
         )
 
-
-def _file_record(path: Path) -> dict[str, Any]:
-    require_file(path)
-    return {
-        "file": path.name,
-        "bytes": path.stat().st_size,
-        "sha256": sha256(path),
-    }
+    profile_config = _read_json(profile_dir / "config.json")
+    for filename in _force_files(profile_config):
+        copy_required(_find_force_source(filename, profile_dir), release_dir / filename)
 
 
-def _read_json(path: Path) -> dict[str, Any]:
-    with require_file(path).open(encoding="utf-8") as handle:
-        return json.load(handle)
+def _validate_hash(path: Path, expected_hash: str, description: str) -> None:
+    actual_hash = sha256(require_file(path))
+    if actual_hash != expected_hash:
+        raise AssertionError(f"{description} hash does not match config.json.")
 
 
 def validate_release_package(release_dir: Path) -> dict[str, Any]:
-    """Validate that a release folder resolves every required static artifact."""
+    """Validate all files and hashes required by one independent release folder."""
     index = _read_json(release_dir / "index.json")
     config = _read_json(release_dir / "config.json")
     profile = _read_json(release_dir / "profile.json")
+
+    profile_name = str(profile.get("profile", ""))
+    if profile_name != release_dir.name:
+        raise AssertionError(f"Profile metadata {profile_name!r} does not match folder {release_dir.name!r}.")
+    if abs(float(profile.get("targetRtp")) - float(config.get("rtp")) / 100) > 1e-12:
+        raise AssertionError("Profile target RTP does not match config.json RTP.")
 
     index_modes = {entry["name"]: entry for entry in index.get("modes", [])}
     if set(index_modes) != set(MODES):
         raise AssertionError(f"Release index has unexpected modes: {sorted(index_modes)}")
 
-    for mode in MODES:
-        entry = index_modes[mode]
-        require_file(release_dir / entry["events"])
-        require_file(release_dir / entry["weights"])
-
-    frontend_file = config.get("frontendConfig", {}).get("file")
-    if not frontend_file:
-        raise AssertionError("Release config.json does not declare frontendConfig.file.")
-    require_file(release_dir / frontend_file)
-
     config_modes = {entry["name"]: entry for entry in config.get("bookShelfConfig", [])}
     if set(config_modes) != set(MODES):
         raise AssertionError(f"Release config has unexpected modes: {sorted(config_modes)}")
 
-    for mode in MODES:
-        entry = config_modes[mode]
-        table = entry["tables"][0]
-        table_path = require_file(release_dir / table["file"])
-        if sha256(table_path) != table["sha256"]:
-            raise AssertionError(f"{mode} lookup hash does not match config.json.")
-
-        books_file = entry["booksFile"]
-        books_path = require_file(release_dir / books_file["file"])
-        if sha256(books_path) != books_file["sha256"]:
-            raise AssertionError(f"{mode} books hash does not match config.json.")
+    frontend_config = config.get("frontendConfig", {})
+    frontend_file = frontend_config.get("file")
+    frontend_hash = frontend_config.get("sha256")
+    if not frontend_file or not frontend_hash:
+        raise AssertionError("Release config.json does not declare frontendConfig file and hash.")
+    _validate_hash(release_dir / str(frontend_file), str(frontend_hash), "Frontend config")
 
     for mode in MODES:
+        index_entry = index_modes[mode]
+        config_entry = config_modes[mode]
+        if float(index_entry.get("cost")) != float(config_entry.get("cost")):
+            raise AssertionError(f"{mode} cost differs between index.json and config.json.")
+
+        require_file(release_dir / str(index_entry["events"]))
+        require_file(release_dir / str(index_entry["weights"]))
+
+        table = config_entry["tables"][0]
+        _validate_hash(release_dir / str(table["file"]), str(table["sha256"]), f"{mode} lookup")
+
+        books_file = config_entry["booksFile"]
+        _validate_hash(release_dir / str(books_file["file"]), str(books_file["sha256"]), f"{mode} books")
+
+        verification_path = release_dir / f"books_{mode}.verification.json"
+        verification = _read_json(verification_path)
+        if verification.get("file_hash") != sha256(release_dir / str(books_file["file"])):
+            raise AssertionError(f"{mode} book verification hash does not match the packaged book.")
         require_file(release_dir / f"event_config_{mode}.json")
-        require_file(release_dir / f"books_{mode}.verification.json")
+
+    for filename, expected_hash in _force_files(config).items():
+        _validate_hash(release_dir / filename, expected_hash, f"Force file {filename}")
 
     return {
-        "profile": profile.get("profile"),
+        "profile": profile_name,
         "targetRtp": profile.get("targetRtp"),
         "validatedAt": datetime.now(timezone.utc).isoformat(),
         "files": [_file_record(path) for path in sorted(release_dir.iterdir()) if path.is_file()],
@@ -150,7 +202,7 @@ def build_release_package(percentage: int) -> tuple[Path, dict[str, Any]]:
     release_dir.mkdir(parents=True, exist_ok=True)
 
     _copy_profile_files(profile_dir, release_dir)
-    _copy_shared_files(release_dir)
+    _copy_shared_files(profile_dir, release_dir)
 
     validation = validate_release_package(release_dir)
     release_manifest = {
@@ -166,9 +218,7 @@ def build_release_package(percentage: int) -> tuple[Path, dict[str, Any]]:
     with (release_dir / "release_manifest.json").open("w", encoding="utf-8") as handle:
         json.dump(release_manifest, handle, indent=2)
 
-    # Validate once more with the final manifest included in the directory.
-    validation = validate_release_package(release_dir)
-    return release_dir, validation
+    return release_dir, validate_release_package(release_dir)
 
 
 def build_release_packages(percentages: list[int] | tuple[int, ...]) -> list[dict[str, Any]]:
