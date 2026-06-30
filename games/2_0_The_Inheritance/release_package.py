@@ -77,18 +77,27 @@ def _force_files(config: dict[str, Any]) -> dict[str, str]:
 
 
 def _find_force_source(filename: str, profile_dir: Path) -> Path:
-    """Locate a generated force file without guessing its contents."""
-    candidates = (
+    """Locate a generated force file and reject an ambiguous result."""
+    direct_candidates = (
         profile_dir / filename,
         FORCES_DIR / filename,
         CONFIG_DIR / filename,
         PUBLISH_DIR / filename,
         LIBRARY_DIR / filename,
+        GAME_DIR / filename,
     )
-    for candidate in candidates:
+    for candidate in direct_candidates:
         if candidate.is_file():
             return candidate
-    locations = ", ".join(str(candidate) for candidate in candidates)
+
+    matches = sorted(path for path in GAME_DIR.rglob(filename) if path.is_file())
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        paths = ", ".join(str(path) for path in matches)
+        raise FileNotFoundError(f"Force artifact {filename} is ambiguous. Found: {paths}")
+
+    locations = ", ".join(str(candidate) for candidate in direct_candidates)
     raise FileNotFoundError(f"Force artifact {filename} was referenced but not found. Checked: {locations}")
 
 
