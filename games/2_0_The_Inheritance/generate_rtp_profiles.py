@@ -1,4 +1,4 @@
-"""Generate and verify selectable RTP editions for The Inheritance."""
+"""Generate, verify, and package selectable RTP editions for The Inheritance."""
 
 from __future__ import annotations
 
@@ -23,6 +23,7 @@ from game_config import GameConfig  # noqa: E402
 from game_optimization import OptimizationSetup  # noqa: E402
 from gamestate import GameState  # noqa: E402
 from optimization_program.run_script import OptimizationExecution  # noqa: E402
+from release_package import build_release_packages  # noqa: E402
 from rtp_profiles import (  # noqa: E402
     DEFAULT_RTP_PERCENTAGE,
     RTP_ENV_VAR,
@@ -193,6 +194,11 @@ def main() -> None:
         encoding="utf-8",
     )
     print(f"Wrote {STATIC_ARTIFACT_MANIFEST_PATH}")
+
+    release_packages = build_release_packages(args.profiles)
+    print("Validated standalone RTP release packages:")
+    for package in release_packages:
+        print(f"- {package['profile']}: {package['path']}")
 
 
 if __name__ == "__main__":
