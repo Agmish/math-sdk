@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-import { chromium } from 'playwright-core';
+import { launchTestBrowser } from './browser_launch.mjs';
 
 const baseUrl = process.env.GAME_URL ?? 'http://127.0.0.1:5173';
 const visualUrl = new URL(baseUrl);
@@ -15,11 +15,10 @@ lossUrl.search = visualUrl.search;
 const socialUrl = new URL(baseUrl);
 socialUrl.search = visualUrl.search;
 socialUrl.searchParams.set('social', 'true');
-const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const output = fileURLToPath(new URL('../visual-qa/', import.meta.url));
 await mkdir(output, { recursive: true });
 
-const browser = await chromium.launch({ headless: true, executablePath: edgePath });
+const browser = await launchTestBrowser();
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
 const errors = [];
 let movingReels = 0;

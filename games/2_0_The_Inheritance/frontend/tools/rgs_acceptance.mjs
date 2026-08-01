@@ -1,9 +1,8 @@
-import { chromium } from 'playwright-core';
 import { readFileSync } from 'node:fs';
+import { launchTestBrowser } from './browser_launch.mjs';
 
 const baseUrl = process.env.GAME_URL ?? 'http://127.0.0.1:5173';
-const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-const browser = await chromium.launch({ headless: true, executablePath: edgePath });
+const browser = await launchTestBrowser();
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 const calls = { authenticate: 0, play: 0, endRound: 0, replay: 0 };
 let scenario = 'zero';
