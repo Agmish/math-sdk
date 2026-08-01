@@ -14,7 +14,7 @@
     "eventPayoutScale": 100
   },
   "buildVersion": "1.0.0",
-  "sourceBaseRevision": "b4046512b0cba9864769835ce0d2db2dc60c87fd",
+  "sourceBaseRevision": "77d7543a318441f312e21245db4eec46a04de592",
   "publication": {
     "math": "games/2_0_The_Inheritance/library/publish_files",
     "frontend": "games/2_0_The_Inheritance/frontend/dist"
