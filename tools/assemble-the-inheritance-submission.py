@@ -1,4 +1,4 @@
-"""Create the complete RTP 96 Stake submission bundle for The Inheritance."""
+"""Assemble the two exact Stake ACP roots plus auditable submission evidence."""
 
 from __future__ import annotations
 
@@ -11,8 +11,12 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME_DIR = ROOT / "games" / "2_0_The_Inheritance"
-MATH_SOURCE = GAME_DIR / "release" / "rtp_96"
-ARTIFACT_ROOT = ROOT / "artifacts" / "the-inheritance-submission-rtp96"
+MATH_SOURCE = GAME_DIR / "library" / "publish_files"
+FRONTEND_SOURCE = GAME_DIR / "frontend" / "dist"
+SOURCE_MANIFEST = GAME_DIR / "release" / "submission_manifest.json"
+CONTRACT = GAME_DIR / "game_contract.json"
+CHECKLIST = GAME_DIR / "docs" / "STAKE_ENGINE_59_CHECKLIST.md"
+ARTIFACT_ROOT = ROOT / "artifacts" / "the-inheritance-submission"
 
 
 def sha256_file(path: Path) -> str:
@@ -32,68 +36,112 @@ def directory_index(directory: Path) -> list[dict[str, int | str]]:
             files.append(
                 {
                     "path": path.relative_to(directory).as_posix(),
-                    "bytes": path.stat().st_size,
+                    "size": path.stat().st_size,
                     "sha256": sha256_file(path),
                 }
             )
     return files
 
 
-def verify_math_source(manifest: dict) -> None:
-    if manifest.get("gameId") != "2_0_The_Inheritance":
-        raise RuntimeError("Unexpected math game ID")
-    if manifest.get("gameName") != "The Inheritance":
-        raise RuntimeError("Unexpected math game name")
-    if manifest.get("profile") != "rtp_96" or manifest.get("rtp") != 96:
-        raise RuntimeError("Submission math package is not rtp_96")
-    for relative_path, details in manifest["files"].items():
-        source = MATH_SOURCE / relative_path
-        if not source.is_file() or sha256_file(source) != details["sha256"]:
-            raise RuntimeError(f"Math package hash validation failed: {relative_path}")
+def verify_inventory(manifest: dict, key: str, source_root: Path) -> None:
+    records = manifest.get(key)
+    if not isinstance(records, list):
+        raise RuntimeError(f"Submission manifest is missing {key}")
+    expected = {}
+    for record in records:
+        path = GAME_DIR / record["path"]
+        try:
+            relative = path.relative_to(source_root).as_posix()
+        except ValueError as exc:
+            raise RuntimeError(f"Manifest path escaped {source_root}: {path}") from exc
+        expected[relative] = record
+        if not path.is_file() or path.stat().st_size != record["size"]:
+            raise RuntimeError(f"Submission file size validation failed: {path}")
+        if sha256_file(path) != record["sha256"]:
+            raise RuntimeError(f"Submission file hash validation failed: {path}")
+    actual = {
+        path.relative_to(source_root).as_posix()
+        for path in source_root.rglob("*")
+        if path.is_file()
+    }
+    if actual != set(expected):
+        raise RuntimeError(f"Manifest inventory does not exactly match {source_root}")
 
 
 def main() -> None:
-    frontend_value = os.getenv("THE_INHERITANCE_RELEASE_BUILD_DIR")
-    if not frontend_value:
-        raise RuntimeError("THE_INHERITANCE_RELEASE_BUILD_DIR is required")
-    frontend_source = Path(frontend_value).resolve()
-    if not (frontend_source / "index.html").is_file() or not (frontend_source / "_app").is_dir():
-        raise RuntimeError("Generated rtp_96 frontend is incomplete")
+    if not (MATH_SOURCE / "index.json").is_file():
+        raise RuntimeError("Canonical Math root is missing index.json")
+    if not (FRONTEND_SOURCE / "index.html").is_file():
+        raise RuntimeError("Canonical Front End root is missing index.html")
 
-    with (MATH_SOURCE / "manifest.json").open(encoding="utf-8") as source:
-        math_manifest = json.load(source)
-    verify_math_source(math_manifest)
+    manifest = json.loads(SOURCE_MANIFEST.read_text(encoding="utf-8"))
+    verify_inventory(manifest, "mathFiles", MATH_SOURCE)
+    verify_inventory(manifest, "frontendFiles", FRONTEND_SOURCE)
 
+    resolved_artifact = ARTIFACT_ROOT.resolve()
+    resolved_workspace = ROOT.resolve()
+    if not resolved_artifact.is_relative_to(resolved_workspace) or resolved_artifact == resolved_workspace:
+        raise RuntimeError("Artifact output escaped the repository workspace")
     if ARTIFACT_ROOT.exists():
         shutil.rmtree(ARTIFACT_ROOT)
+
     math_target = ARTIFACT_ROOT / "math"
     frontend_target = ARTIFACT_ROOT / "frontend"
+    evidence_target = ARTIFACT_ROOT / "evidence"
     shutil.copytree(MATH_SOURCE, math_target, symlinks=False)
-    shutil.copytree(frontend_source, frontend_target, symlinks=False)
+    shutil.copytree(FRONTEND_SOURCE, frontend_target, symlinks=False)
+    evidence_target.mkdir(parents=True)
+    shutil.copy2(SOURCE_MANIFEST, evidence_target / "source-submission-manifest.json")
+    shutil.copy2(CONTRACT, evidence_target / "game-contract.json")
+    shutil.copy2(CHECKLIST, evidence_target / "stake-engine-59-checklist.md")
 
     bundle_manifest = {
-        "schemaVersion": 1,
-        "gameId": "2_0_The_Inheritance",
-        "gameName": "The Inheritance",
-        "profile": "rtp_96",
-        "rtp": 96,
+        "schemaVersion": 2,
+        "game": manifest["game"],
+        "buildVersion": manifest["buildVersion"],
         "commit": os.getenv("GITHUB_SHA", "local"),
+        "acpSelections": {
+            "math": "math",
+            "frontend": "frontend",
+        },
+        "modes": manifest["modes"],
+        "sourceManifestSha256": sha256_file(SOURCE_MANIFEST),
         "math": directory_index(math_target),
         "frontend": directory_index(frontend_target),
+        "evidence": directory_index(evidence_target),
+        "officialRequirements": {
+            "engineSetup": "https://stakeengine.github.io/math-sdk/math_docs/general_overview/",
+            "mathFormat": "https://stakeengine.github.io/math-sdk/rgs_docs/data_format/",
+            "productionBooks": "https://stakeengine.github.io/math-sdk/math_docs/quickstart/",
+            "frontendPublishing": "https://stakeengine.github.io/math-sdk/simple_example/simple_example/",
+            "rgs": "https://stakeengine.github.io/math-sdk/rgs_docs/RGS/",
+        },
     }
-    with (ARTIFACT_ROOT / "submission-manifest.json").open("w", encoding="utf-8", newline="\n") as target:
-        json.dump(bundle_manifest, target, indent=2, sort_keys=True)
-        target.write("\n")
-
+    (ARTIFACT_ROOT / "submission-manifest.json").write_text(
+        json.dumps(bundle_manifest, indent=2) + "\n", encoding="utf-8"
+    )
     (ARTIFACT_ROOT / "README.txt").write_text(
-        "The Inheritance - Stake submission bundle\n\n"
-        "math/ contains the rtp_96 Math SDK release package.\n"
-        "frontend/ contains the matching generated static frontend.\n"
-        "submission-manifest.json records hashes for both deliverables.\n",
+        "The Inheritance - canonical Stake Engine submission\n\n"
+        "In Stake ACP, select the repository folder games/2_0_The_Inheritance/library/publish_files for Math.\n"
+        "index.json must be directly visible in that selected folder.\n\n"
+        "Select games/2_0_The_Inheritance/frontend/dist for Front End.\n"
+        "index.html must be directly visible in that selected folder.\n\n"
+        "The math/ and frontend/ directories in this proof artifact are exact hashed copies of those roots.\n"
+        "The evidence/ directory is review material and must not be selected as either ACP version.\n",
         encoding="utf-8",
         newline="\n",
     )
-    print(f"Created {ARTIFACT_ROOT}")
+    print(
+        json.dumps(
+            {
+                "status": "PASS",
+                "artifact": str(ARTIFACT_ROOT),
+                "mathFiles": len(bundle_manifest["math"]),
+                "frontendFiles": len(bundle_manifest["frontend"]),
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

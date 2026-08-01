@@ -1,0 +1,580 @@
+{
+  "schemaVersion": 1,
+  "game": {
+    "id": "2_0_The_Inheritance",
+    "title": "The Inheritance",
+    "subtitle": "A Blackthorn Estate Mystery",
+    "reels": 5,
+    "rows": 4,
+    "ways": 1024,
+    "rtp": 0.96,
+    "rtpLabel": "96.00%",
+    "houseEdge": 0.04,
+    "maxWin": 15000.0,
+    "eventPayoutScale": 100
+  },
+  "symbols": [
+    {
+      "id": "CROWN",
+      "label": "The Heiress",
+      "asset": "symbols/heiress.webp",
+      "pays": {
+        "3": 1.0,
+        "4": 5.0,
+        "5": 20.0
+      }
+    },
+    {
+      "id": "PORTRAIT",
+      "label": "The Executor",
+      "asset": "symbols/executor.webp",
+      "pays": {
+        "3": 0.5,
+        "4": 2.5,
+        "5": 10.0
+      }
+    },
+    {
+      "id": "RING",
+      "label": "Emerald Ring",
+      "asset": "symbols/poison-ring.webp",
+      "pays": {
+        "3": 0.3,
+        "4": 1.5,
+        "5": 5.0
+      }
+    },
+    {
+      "id": "WATCH",
+      "label": "Midnight Watch",
+      "asset": "symbols/pocket-watch.webp",
+      "pays": {
+        "3": 0.2,
+        "4": 0.8,
+        "5": 3.0
+      }
+    },
+    {
+      "id": "LETTER",
+      "label": "Funeral Letter",
+      "asset": "symbols/lilies.webp",
+      "pays": {
+        "3": 0.1,
+        "4": 0.5,
+        "5": 2.0
+      }
+    },
+    {
+      "id": "WILD",
+      "label": "Wax Seal Wild",
+      "asset": "symbols/wax-wild.webp",
+      "special": "wild"
+    },
+    {
+      "id": "TESTAMENT",
+      "label": "Testament Scatter",
+      "asset": "symbols/testament.webp",
+      "special": "sealed_will"
+    },
+    {
+      "id": "KEY",
+      "label": "Vault Key",
+      "asset": "symbols/vault-scatter.webp",
+      "special": "vault_echoes"
+    },
+    {
+      "id": "MIRROR",
+      "label": "Seance Mirror",
+      "asset": "symbols/seance-mirror.webp",
+      "special": "midnight_seance"
+    },
+    {
+      "id": "SCATTER",
+      "label": "Blackthorn Crest",
+      "asset": "symbols/stag.webp",
+      "special": "final_codicil"
+    }
+  ],
+  "modes": [
+    {
+      "id": "BASE",
+      "title": "Base Game",
+      "description": "1024 ways with natural feature triggers.",
+      "cost": 1,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": true,
+      "buyBonus": false,
+      "startingSpins": null,
+      "retriggerSpins": 0,
+      "statistics": {
+        "hitRate": 0.397403,
+        "zeroReturnRate": 0.602597,
+        "belowCostRate": 0.912597,
+        "profitableRoundRate": 0.087403,
+        "featureHitRate": 0.027403,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0,
+          "weight": 602597,
+          "feature": "regular"
+        },
+        {
+          "id": "small_win",
+          "payoutMultiplier": 0.4,
+          "weight": 190000,
+          "feature": "regular"
+        },
+        {
+          "id": "ways_win",
+          "payoutMultiplier": 0.9,
+          "weight": 120000,
+          "feature": "regular"
+        },
+        {
+          "id": "expanding_wild",
+          "payoutMultiplier": 3.0,
+          "weight": 60000,
+          "feature": "expanding_wild"
+        },
+        {
+          "id": "sealed_will",
+          "payoutMultiplier": 10.0,
+          "weight": 20000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "vault_echoes",
+          "payoutMultiplier": 20.0,
+          "weight": 5000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "midnight_seance",
+          "payoutMultiplier": 40.0,
+          "weight": 2000,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "final_codicil",
+          "payoutMultiplier": 500.0,
+          "weight": 402,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "final_codicil"
+        }
+      ]
+    },
+    {
+      "id": "HEIRLOOM_ANTE",
+      "title": "Heirloom Ante",
+      "description": "Three-times stake with increased feature frequency.",
+      "cost": 3,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": true,
+      "buyBonus": false,
+      "startingSpins": null,
+      "retriggerSpins": 0,
+      "statistics": {
+        "hitRate": 0.486131,
+        "zeroReturnRate": 0.513869,
+        "belowCostRate": 0.853869,
+        "profitableRoundRate": 0.146131,
+        "featureHitRate": 0.066131,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0,
+          "weight": 513869,
+          "feature": "regular"
+        },
+        {
+          "id": "small_win",
+          "payoutMultiplier": 0.4,
+          "weight": 200000,
+          "feature": "regular"
+        },
+        {
+          "id": "ways_win",
+          "payoutMultiplier": 1.2,
+          "weight": 140000,
+          "feature": "regular"
+        },
+        {
+          "id": "expanding_wild",
+          "payoutMultiplier": 3.6,
+          "weight": 80000,
+          "feature": "expanding_wild"
+        },
+        {
+          "id": "sealed_will",
+          "payoutMultiplier": 10.0,
+          "weight": 35000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "vault_echoes",
+          "payoutMultiplier": 25.0,
+          "weight": 15000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "midnight_seance",
+          "payoutMultiplier": 50.0,
+          "weight": 14680,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "final_codicil",
+          "payoutMultiplier": 600.0,
+          "weight": 1450,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "final_codicil"
+        }
+      ]
+    },
+    {
+      "id": "SEALED_WILL_BUY",
+      "title": "Sealed Will",
+      "description": "Eight free spins; expanding wild reels remain active for the spin.",
+      "cost": 80,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": false,
+      "buyBonus": true,
+      "startingSpins": 8,
+      "retriggerSpins": 2,
+      "statistics": {
+        "hitRate": 0.725525,
+        "zeroReturnRate": 0.274475,
+        "belowCostRate": 0.476075,
+        "profitableRoundRate": 0.373925,
+        "featureHitRate": 1.0,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0.0,
+          "weight": 274475,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "quarter",
+          "payoutMultiplier": 20.0,
+          "weight": 100000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "half",
+          "payoutMultiplier": 40.0,
+          "weight": 100000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "stake",
+          "payoutMultiplier": 80.0,
+          "weight": 150000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "one_and_half",
+          "payoutMultiplier": 120.0,
+          "weight": 150000,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "double",
+          "payoutMultiplier": 160.0,
+          "weight": 99999,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "two_and_half",
+          "payoutMultiplier": 200.0,
+          "weight": 99900,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "two_and_half_tuning",
+          "payoutMultiplier": 200.0,
+          "weight": 24025,
+          "feature": "sealed_will"
+        },
+        {
+          "id": "exact_rtp_tuning",
+          "payoutMultiplier": 0.1,
+          "weight": 1600,
+          "feature": "sealed_will"
+        }
+      ]
+    },
+    {
+      "id": "VAULT_ECHOES_BUY",
+      "title": "Vault Echoes",
+      "description": "Six lock-and-respin rounds with collected key prizes.",
+      "cost": 140,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": false,
+      "buyBonus": true,
+      "startingSpins": 6,
+      "retriggerSpins": 0,
+      "statistics": {
+        "hitRate": 0.727257,
+        "zeroReturnRate": 0.272743,
+        "belowCostRate": 0.476043,
+        "profitableRoundRate": 0.373957,
+        "featureHitRate": 1.0,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0.0,
+          "weight": 272743,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "quarter",
+          "payoutMultiplier": 35.0,
+          "weight": 100000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "half",
+          "payoutMultiplier": 70.0,
+          "weight": 100000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "stake",
+          "payoutMultiplier": 140.0,
+          "weight": 150000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "one_and_half",
+          "payoutMultiplier": 210.0,
+          "weight": 150000,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "double",
+          "payoutMultiplier": 280.0,
+          "weight": 99999,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "two_and_half",
+          "payoutMultiplier": 350.0,
+          "weight": 99900,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "two_and_half_tuning",
+          "payoutMultiplier": 350.0,
+          "weight": 24057,
+          "feature": "vault_echoes"
+        },
+        {
+          "id": "exact_rtp_tuning",
+          "payoutMultiplier": 0.1,
+          "weight": 3300,
+          "feature": "vault_echoes"
+        }
+      ]
+    },
+    {
+      "id": "MIDNIGHT_SEANCE_BUY",
+      "title": "Midnight Seance",
+      "description": "Ten free spins with a possessed expanding reel.",
+      "cost": 200,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": false,
+      "buyBonus": true,
+      "startingSpins": 10,
+      "retriggerSpins": 2,
+      "statistics": {
+        "hitRate": 0.72797,
+        "zeroReturnRate": 0.27203,
+        "belowCostRate": 0.47603,
+        "profitableRoundRate": 0.37397,
+        "featureHitRate": 1.0,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0.0,
+          "weight": 272030,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "quarter",
+          "payoutMultiplier": 50.0,
+          "weight": 100000,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "half",
+          "payoutMultiplier": 100.0,
+          "weight": 100000,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "stake",
+          "payoutMultiplier": 200.0,
+          "weight": 150000,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "one_and_half",
+          "payoutMultiplier": 300.0,
+          "weight": 150000,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "double",
+          "payoutMultiplier": 400.0,
+          "weight": 99999,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "two_and_half",
+          "payoutMultiplier": 500.0,
+          "weight": 99900,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "two_and_half_tuning",
+          "payoutMultiplier": 500.0,
+          "weight": 24070,
+          "feature": "midnight_seance"
+        },
+        {
+          "id": "exact_rtp_tuning",
+          "payoutMultiplier": 0.1,
+          "weight": 4000,
+          "feature": "midnight_seance"
+        }
+      ]
+    },
+    {
+      "id": "FINAL_CODICIL_BUY",
+      "title": "Final Codicil",
+      "description": "A three-act sequence combining Will, Vault, and Seance.",
+      "cost": 300,
+      "rtp": 0.96,
+      "maxWin": 15000.0,
+      "feature": false,
+      "buyBonus": true,
+      "startingSpins": 11,
+      "retriggerSpins": 0,
+      "statistics": {
+        "hitRate": 0.72998,
+        "zeroReturnRate": 0.27002,
+        "belowCostRate": 0.47602,
+        "profitableRoundRate": 0.37398,
+        "featureHitRate": 1.0,
+        "maxWinFrequency": 1000000.0
+      },
+      "outcomes": [
+        {
+          "id": "loss",
+          "payoutMultiplier": 0.0,
+          "weight": 270020,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "quarter",
+          "payoutMultiplier": 75.0,
+          "weight": 100000,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "half",
+          "payoutMultiplier": 150.0,
+          "weight": 100000,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "stake",
+          "payoutMultiplier": 300.0,
+          "weight": 150000,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "one_and_half",
+          "payoutMultiplier": 450.0,
+          "weight": 150000,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "double",
+          "payoutMultiplier": 600.0,
+          "weight": 99999,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "two_and_half",
+          "payoutMultiplier": 750.0,
+          "weight": 99900,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "max_win",
+          "payoutMultiplier": 15000.0,
+          "weight": 1,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "two_and_half_tuning",
+          "payoutMultiplier": 750.0,
+          "weight": 24080,
+          "feature": "final_codicil"
+        },
+        {
+          "id": "exact_rtp_tuning",
+          "payoutMultiplier": 0.1,
+          "weight": 6000,
+          "feature": "final_codicil"
+        }
+      ]
+    }
+  ]
+}

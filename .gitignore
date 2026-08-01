@@ -55,5 +55,11 @@ tools/the-inheritance-local-rgs/data/
 !games/2_0_The_Inheritance/library/configs/math_config.json
 !games/2_0_The_Inheritance/library/configs/event_config_*.json
 !games/2_0_The_Inheritance/library/configs/books_*.verification.json
+!games/2_0_The_Inheritance/library/configs/generation_summary.json
+!games/2_0_The_Inheritance/library/configs/par_sheet.json
+!games/2_0_The_Inheritance/library/configs/submission_verification.json
+!games/2_0_The_Inheritance/library/forces/
+!games/2_0_The_Inheritance/library/forces/force.json
+!games/2_0_The_Inheritance/library/forces/force_record_*.json
 !games/2_0_The_Inheritance/release/
 !games/2_0_The_Inheritance/release/**

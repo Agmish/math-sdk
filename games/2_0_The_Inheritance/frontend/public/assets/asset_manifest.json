@@ -1,0 +1,30 @@
+{
+  "game": "the-inheritance",
+  "visualDirection": "Original 1920s mystery-book gouache and pen illustration with visible brushwork, irregular crosshatching, and imperfect print texture.",
+  "images": [
+    { "id": "blackthorn-hall", "path": "/assets/blackthorn-hall.webp", "role": "game-background" },
+    { "id": "sealed-will", "path": "/assets/features/sealed-will.webp", "role": "feature-art" },
+    { "id": "vault-echoes", "path": "/assets/features/vault-echoes.webp", "role": "feature-art" },
+    { "id": "midnight-seance", "path": "/assets/features/midnight-seance.webp", "role": "feature-art" },
+    { "id": "final-codicil", "path": "/assets/features/final-codicil.webp", "role": "feature-art" },
+    { "id": "chapter-will", "path": "/assets/transitions/chapter-will.webp", "role": "animated-chapter-transition" },
+    { "id": "chapter-vault", "path": "/assets/transitions/chapter-vault.webp", "role": "animated-chapter-transition" },
+    { "id": "chapter-seance", "path": "/assets/transitions/chapter-seance.webp", "role": "animated-chapter-transition" },
+    { "id": "chapter-codicil", "path": "/assets/transitions/chapter-codicil.webp", "role": "animated-chapter-transition" }
+  ],
+  "tileAssets": [
+    { "id": "heiress", "path": "/assets/symbols/heiress.webp" },
+    { "id": "executor", "path": "/assets/symbols/executor.webp" },
+    { "id": "stag", "path": "/assets/symbols/stag.webp" },
+    { "id": "raven-key", "path": "/assets/symbols/raven-key.webp" },
+    { "id": "testament", "path": "/assets/symbols/testament.webp" },
+    { "id": "poison-ring", "path": "/assets/symbols/poison-ring.webp" },
+    { "id": "pocket-watch", "path": "/assets/symbols/pocket-watch.webp" },
+    { "id": "lilies", "path": "/assets/symbols/lilies.webp" },
+    { "id": "candelabrum", "path": "/assets/symbols/candelabrum.webp" },
+    { "id": "wax-wild", "path": "/assets/symbols/wax-wild.webp" },
+    { "id": "vault-scatter", "path": "/assets/symbols/vault-scatter.webp" },
+    { "id": "seance-mirror", "path": "/assets/symbols/seance-mirror.webp" }
+  ],
+  "audioManifest": "/assets/audio_manifest.json"
+}

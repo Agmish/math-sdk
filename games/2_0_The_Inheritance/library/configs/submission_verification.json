@@ -1,0 +1,473 @@
+{
+  "status": "PASS",
+  "gameID": "2_0_The_Inheritance",
+  "stateless": true,
+  "modeCount": 6,
+  "results": {
+    "BASE": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "42.1970x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.296,
+        "etl10k": 0.015,
+        "cvar": 123.179359,
+        "status": "PASS"
+      },
+      "criteria": {
+        "expanding_wild": 6000,
+        "final_codicil": 40,
+        "loss": 60259,
+        "max_win": 1,
+        "midnight_seance": 200,
+        "sealed_will": 2000,
+        "small_win": 19000,
+        "vault_echoes": 500,
+        "ways_win": 12000
+      },
+      "eventTypes": [
+        "codicilFusion",
+        "expandWild",
+        "expandedBoard",
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "freeSpinTrigger",
+        "lockPrize",
+        "presentationPlan",
+        "reveal",
+        "seancePossess",
+        "setTotalWin",
+        "setWin",
+        "updateFreeSpin",
+        "vaultState",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 3,
+          "criteria": "small_win",
+          "payoutMultiplier": 0.4,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 6,
+          "criteria": "ways_win",
+          "payoutMultiplier": 0.9,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 11,
+          "criteria": "ways_win",
+          "payoutMultiplier": 0.9,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 15,
+          "criteria": "ways_win",
+          "payoutMultiplier": 0.9,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 21,
+          "criteria": "ways_win",
+          "payoutMultiplier": 0.9,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "a22cfdbd63eae4344ef83a45d453a61bcf3f4bbefff6a1cb59e8894e6bfeb7a9"
+    },
+    "HEIRLOOM_ANTE": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "43.7483x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.885,
+        "etl10k": 0.015,
+        "cvar": 203.308063,
+        "status": "PASS"
+      },
+      "criteria": {
+        "expanding_wild": 8000,
+        "final_codicil": 145,
+        "loss": 51386,
+        "max_win": 1,
+        "midnight_seance": 1468,
+        "sealed_will": 3500,
+        "small_win": 20000,
+        "vault_echoes": 1500,
+        "ways_win": 14000
+      },
+      "eventTypes": [
+        "ante",
+        "codicilFusion",
+        "expandWild",
+        "expandedBoard",
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "freeSpinTrigger",
+        "lockPrize",
+        "presentationPlan",
+        "reveal",
+        "seancePossess",
+        "setTotalWin",
+        "setWin",
+        "updateFreeSpin",
+        "vaultState",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 0,
+          "criteria": "ways_win",
+          "payoutMultiplier": 1.2,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 1,
+          "criteria": "expanding_wild",
+          "payoutMultiplier": 3.6,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 2,
+          "criteria": "small_win",
+          "payoutMultiplier": 0.4,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 3,
+          "criteria": "small_win",
+          "payoutMultiplier": 0.4,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 4,
+          "criteria": "vault_echoes",
+          "payoutMultiplier": 25.0,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "55c4178b3523f4de157f7154de66bee45efcbde661a94e5752dcb5a82bfad14f"
+    },
+    "SEALED_WILL_BUY": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "2.5185x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.015,
+        "etl10k": 0.015,
+        "cvar": 2.501493,
+        "status": "PASS"
+      },
+      "criteria": {
+        "double": 10000,
+        "exact_rtp_tuning": 160,
+        "half": 10000,
+        "loss": 27447,
+        "max_win": 1,
+        "one_and_half": 15000,
+        "quarter": 10000,
+        "stake": 15000,
+        "two_and_half": 9990,
+        "two_and_half_tuning": 2402
+      },
+      "eventTypes": [
+        "expandWild",
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "freeSpinTrigger",
+        "presentationPlan",
+        "retrigger",
+        "reveal",
+        "setTotalWin",
+        "setWin",
+        "updateFreeSpin",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 0,
+          "criteria": "quarter",
+          "payoutMultiplier": 20.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 1,
+          "criteria": "stake",
+          "payoutMultiplier": 80.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 2,
+          "criteria": "two_and_half",
+          "payoutMultiplier": 200.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 4,
+          "criteria": "stake",
+          "payoutMultiplier": 80.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 5,
+          "criteria": "stake",
+          "payoutMultiplier": 80.0,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "00b675f598e78a72b7d703041ff7ff7f16febe947a2cabe469342039fdd8060b"
+    },
+    "VAULT_ECHOES_BUY": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "2.5105x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.015,
+        "etl10k": 0.015,
+        "cvar": 2.500844,
+        "status": "PASS"
+      },
+      "criteria": {
+        "double": 10000,
+        "exact_rtp_tuning": 330,
+        "half": 10000,
+        "loss": 27274,
+        "max_win": 1,
+        "one_and_half": 15000,
+        "quarter": 10000,
+        "stake": 15000,
+        "two_and_half": 9990,
+        "two_and_half_tuning": 2405
+      },
+      "eventTypes": [
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "lockPrize",
+        "presentationPlan",
+        "reveal",
+        "setTotalWin",
+        "setWin",
+        "vaultState",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 0,
+          "criteria": "double",
+          "payoutMultiplier": 280.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 1,
+          "criteria": "quarter",
+          "payoutMultiplier": 35.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 2,
+          "criteria": "half",
+          "payoutMultiplier": 70.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 3,
+          "criteria": "one_and_half",
+          "payoutMultiplier": 210.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 4,
+          "criteria": "stake",
+          "payoutMultiplier": 140.0,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "94bc66839feb7700b4acc36cf341f1631519fd0ba3a66347363ffa53f196d39c"
+    },
+    "MIDNIGHT_SEANCE_BUY": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "2.5072x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.015,
+        "etl10k": 0.015,
+        "cvar": 2.500585,
+        "status": "PASS"
+      },
+      "criteria": {
+        "double": 9999,
+        "exact_rtp_tuning": 400,
+        "half": 10000,
+        "loss": 27203,
+        "max_win": 1,
+        "one_and_half": 15000,
+        "quarter": 10000,
+        "stake": 15000,
+        "two_and_half": 9990,
+        "two_and_half_tuning": 2407
+      },
+      "eventTypes": [
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "freeSpinTrigger",
+        "presentationPlan",
+        "retrigger",
+        "reveal",
+        "seancePossess",
+        "setTotalWin",
+        "setWin",
+        "updateFreeSpin",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 1,
+          "criteria": "double",
+          "payoutMultiplier": 400.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 2,
+          "criteria": "quarter",
+          "payoutMultiplier": 50.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 4,
+          "criteria": "two_and_half",
+          "payoutMultiplier": 500.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 5,
+          "criteria": "stake",
+          "payoutMultiplier": 200.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 7,
+          "criteria": "one_and_half",
+          "payoutMultiplier": 300.0,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "fae68339a04f5a90d4173cd93753c87eb3c2907dbd537c4c13c1db751e59fcb2"
+    },
+    "FINAL_CODICIL_BUY": {
+      "books": 100000,
+      "weight": 1000000,
+      "rtp": "96.00%",
+      "maxWin": "15000.00x",
+      "topOnePercentAverage": "2.5048x stake",
+      "threeStarVolatility": {
+        "prob5k": 1e-06,
+        "prob10k": 1e-06,
+        "etl40b": 0.015,
+        "etl10k": 0.015,
+        "cvar": 2.500383,
+        "status": "PASS"
+      },
+      "criteria": {
+        "double": 9999,
+        "exact_rtp_tuning": 600,
+        "half": 10000,
+        "loss": 27002,
+        "max_win": 1,
+        "one_and_half": 15000,
+        "quarter": 10000,
+        "stake": 15000,
+        "two_and_half": 9990,
+        "two_and_half_tuning": 2408
+      },
+      "eventTypes": [
+        "codicilFusion",
+        "expandWild",
+        "featureAward",
+        "featureComplete",
+        "featureIntro",
+        "featureTrigger",
+        "finalWin",
+        "freeSpinTrigger",
+        "lockPrize",
+        "presentationPlan",
+        "reveal",
+        "seancePossess",
+        "setTotalWin",
+        "setWin",
+        "updateFreeSpin",
+        "vaultState",
+        "winInfo"
+      ],
+      "reviewSamples": [
+        {
+          "bookId": 0,
+          "criteria": "double",
+          "payoutMultiplier": 600.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 1,
+          "criteria": "half",
+          "payoutMultiplier": 150.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 3,
+          "criteria": "half",
+          "payoutMultiplier": 150.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 4,
+          "criteria": "one_and_half",
+          "payoutMultiplier": 450.0,
+          "finalEvent": "finalWin"
+        },
+        {
+          "bookId": 5,
+          "criteria": "two_and_half",
+          "payoutMultiplier": 750.0,
+          "finalEvent": "finalWin"
+        }
+      ],
+      "sha256": "f6886d29dbd86286919b39917ad93c16dd17711cb3dd4531ae49b5c65f765d20"
+    }
+  },
+  "mathManifestSha256": "5c42bd3e6ed8a8c2eec7cb385176fc15f4f958f23ad81a9f43f6c4203bfe7954"
+}

@@ -1,0 +1,194 @@
+{
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "4489e40f",
+    "feature": "vault_echoes",
+    "frames": 6,
+    "phases": [
+      "vault_echoes"
+    ]
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "Vault of Echoes",
+    "mode": "VAULT_ECHOES_BUY",
+    "feature": "vault_echoes"
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "KEY"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "KEY"
+        }
+      ],
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "KEY"
+        },
+        {
+          "name": "LETTER"
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      1,
+      2,
+      3
+    ],
+    "gameType": "basegame"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "vault_echoes",
+    "source": "feature_bet",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 3
+      },
+      {
+        "reel": 4,
+        "row": 2
+      }
+    ]
+  },
+  "vaultState": {
+    "type": "vaultState",
+    "locks": 1,
+    "respins": 5,
+    "collected": 4670,
+    "stage": "vault_echoes"
+  },
+  "lockPrize": {
+    "type": "lockPrize",
+    "position": {
+      "reel": 2,
+      "row": 0
+    },
+    "value": 4670,
+    "stage": "vault_echoes"
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "KEY",
+    "amount": 4670,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      }
+    ],
+    "stage": "vault_echoes",
+    "evaluationSource": "vaultCollection"
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 4670,
+    "wins": [
+      {
+        "symbol": "KEY",
+        "kind": 1,
+        "ways": null,
+        "basePay": 4670,
+        "multiplier": 1,
+        "win": 4670,
+        "positions": [
+          {
+            "reel": 2,
+            "row": 0
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      }
+    ],
+    "gameType": "respin",
+    "evaluationSource": "vaultCollection"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 4670,
+    "winLevel": 7
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 4670
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "vault_echoes",
+    "totalWin": 28000
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 28000
+  }
+}

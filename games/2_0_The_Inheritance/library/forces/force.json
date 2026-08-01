@@ -1,0 +1,84 @@
+{
+  "BASE": {
+    "criteria": [
+      "expanding_wild",
+      "final_codicil",
+      "loss",
+      "max_win",
+      "midnight_seance",
+      "sealed_will",
+      "small_win",
+      "vault_echoes",
+      "ways_win"
+    ]
+  },
+  "HEIRLOOM_ANTE": {
+    "criteria": [
+      "expanding_wild",
+      "final_codicil",
+      "loss",
+      "max_win",
+      "midnight_seance",
+      "sealed_will",
+      "small_win",
+      "vault_echoes",
+      "ways_win"
+    ]
+  },
+  "SEALED_WILL_BUY": {
+    "criteria": [
+      "double",
+      "exact_rtp_tuning",
+      "half",
+      "loss",
+      "max_win",
+      "one_and_half",
+      "quarter",
+      "stake",
+      "two_and_half",
+      "two_and_half_tuning"
+    ]
+  },
+  "VAULT_ECHOES_BUY": {
+    "criteria": [
+      "double",
+      "exact_rtp_tuning",
+      "half",
+      "loss",
+      "max_win",
+      "one_and_half",
+      "quarter",
+      "stake",
+      "two_and_half",
+      "two_and_half_tuning"
+    ]
+  },
+  "MIDNIGHT_SEANCE_BUY": {
+    "criteria": [
+      "double",
+      "exact_rtp_tuning",
+      "half",
+      "loss",
+      "max_win",
+      "one_and_half",
+      "quarter",
+      "stake",
+      "two_and_half",
+      "two_and_half_tuning"
+    ]
+  },
+  "FINAL_CODICIL_BUY": {
+    "criteria": [
+      "double",
+      "exact_rtp_tuning",
+      "half",
+      "loss",
+      "max_win",
+      "one_and_half",
+      "quarter",
+      "stake",
+      "two_and_half",
+      "two_and_half_tuning"
+    ]
+  }
+}

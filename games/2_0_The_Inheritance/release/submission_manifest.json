@@ -1,0 +1,407 @@
+{
+  "schemaVersion": 1,
+  "game": {
+    "id": "2_0_The_Inheritance",
+    "title": "The Inheritance",
+    "subtitle": "A Blackthorn Estate Mystery",
+    "reels": 5,
+    "rows": 4,
+    "ways": 1024,
+    "rtp": 0.96,
+    "rtpLabel": "96.00%",
+    "houseEdge": 0.04,
+    "maxWin": 15000.0,
+    "eventPayoutScale": 100
+  },
+  "buildVersion": "1.0.0",
+  "sourceBaseRevision": "77d7543a318441f312e21245db4eec46a04de592",
+  "publication": {
+    "math": "games/2_0_The_Inheritance/library/publish_files",
+    "frontend": "games/2_0_The_Inheritance/frontend/dist"
+  },
+  "modes": [
+    {
+      "name": "BASE",
+      "cost": 1,
+      "events": "books_BASE.jsonl.zst",
+      "weights": "lookUpTable_BASE_0.csv"
+    },
+    {
+      "name": "HEIRLOOM_ANTE",
+      "cost": 3,
+      "events": "books_HEIRLOOM_ANTE.jsonl.zst",
+      "weights": "lookUpTable_HEIRLOOM_ANTE_0.csv"
+    },
+    {
+      "name": "SEALED_WILL_BUY",
+      "cost": 80,
+      "events": "books_SEALED_WILL_BUY.jsonl.zst",
+      "weights": "lookUpTable_SEALED_WILL_BUY_0.csv"
+    },
+    {
+      "name": "VAULT_ECHOES_BUY",
+      "cost": 140,
+      "events": "books_VAULT_ECHOES_BUY.jsonl.zst",
+      "weights": "lookUpTable_VAULT_ECHOES_BUY_0.csv"
+    },
+    {
+      "name": "MIDNIGHT_SEANCE_BUY",
+      "cost": 200,
+      "events": "books_MIDNIGHT_SEANCE_BUY.jsonl.zst",
+      "weights": "lookUpTable_MIDNIGHT_SEANCE_BUY_0.csv"
+    },
+    {
+      "name": "FINAL_CODICIL_BUY",
+      "cost": 300,
+      "events": "books_FINAL_CODICIL_BUY.jsonl.zst",
+      "weights": "lookUpTable_FINAL_CODICIL_BUY_0.csv"
+    }
+  ],
+  "contract": {
+    "path": "game_contract.json",
+    "size": 14174,
+    "sha256": "2af7cb7554e8e5a91327bda1f34eb00747905508ae48f0f59f887f8c742a2b8a"
+  },
+  "thumbnailMaster": {
+    "path": "frontend/public/assets/marketing/the-inheritance-thumbnail-master.png",
+    "size": 3341190,
+    "sha256": "29c0f0abf9df35135548fda065f00bb93f3a356a423c9c2f1cf3b4367f264679"
+  },
+  "checklistEvidence": {
+    "path": "docs/STAKE_ENGINE_59_CHECKLIST.md",
+    "size": 7850,
+    "sha256": "a70e5fabb6c9df60ceb1edc131142781f1cdf7b41516d0d645a3f349ec26fe8b"
+  },
+  "gates": {
+    "mathVerification": "PASS",
+    "typeCheck": "PASS",
+    "unitTests": "PASS (46/46)",
+    "productionBuild": "PASS",
+    "rgsAcceptance": "PASS",
+    "responsiveVisualSmoke": "PASS (22 screenshots)"
+  },
+  "mathFiles": [
+    {
+      "path": "library/publish_files/books_BASE.jsonl.zst",
+      "size": 1481803,
+      "sha256": "a22cfdbd63eae4344ef83a45d453a61bcf3f4bbefff6a1cb59e8894e6bfeb7a9"
+    },
+    {
+      "path": "library/publish_files/books_FINAL_CODICIL_BUY.jsonl.zst",
+      "size": 10855670,
+      "sha256": "f6886d29dbd86286919b39917ad93c16dd17711cb3dd4531ae49b5c65f765d20"
+    },
+    {
+      "path": "library/publish_files/books_HEIRLOOM_ANTE.jsonl.zst",
+      "size": 1856801,
+      "sha256": "55c4178b3523f4de157f7154de66bee45efcbde661a94e5752dcb5a82bfad14f"
+    },
+    {
+      "path": "library/publish_files/books_MIDNIGHT_SEANCE_BUY.jsonl.zst",
+      "size": 7460787,
+      "sha256": "fae68339a04f5a90d4173cd93753c87eb3c2907dbd537c4c13c1db751e59fcb2"
+    },
+    {
+      "path": "library/publish_files/books_SEALED_WILL_BUY.jsonl.zst",
+      "size": 10627591,
+      "sha256": "00b675f598e78a72b7d703041ff7ff7f16febe947a2cabe469342039fdd8060b"
+    },
+    {
+      "path": "library/publish_files/books_VAULT_ECHOES_BUY.jsonl.zst",
+      "size": 4914561,
+      "sha256": "94bc66839feb7700b4acc36cf341f1631519fd0ba3a66347363ffa53f196d39c"
+    },
+    {
+      "path": "library/publish_files/index.json",
+      "size": 1010,
+      "sha256": "28075d38e0ba9b8c4bc296fc84411f24a09391a905605c1a42cb4779495b5359"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_BASE_0.csv",
+      "size": 1140155,
+      "sha256": "45fb27acbbb127bc4770e3dfeee73874fb2d96f06d1326a7d2f8fe8423f51074"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_FINAL_CODICIL_BUY_0.csv",
+      "size": 1369083,
+      "sha256": "7771ca1bfd18c96a4411bfefec48632bf557831914486eea9968589198fc465e"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_HEIRLOOM_ANTE_0.csv",
+      "size": 1172879,
+      "sha256": "14b9b0a55b6bcf64ad319d3e81d3a0c37875addee8c2db766cc712a6c810eea0"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_MIDNIGHT_SEANCE_BUY_0.csv",
+      "size": 1368879,
+      "sha256": "532e95bd22ca6b3adae6b7c61f0e5e8c8a60c85c2e5001973ad205d0cf0af835"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_SEALED_WILL_BUY_0.csv",
+      "size": 1343622,
+      "sha256": "16b040e3ca0c2750b89444cf566153e6c2ea364800b63be8facce4e978cf7ee4"
+    },
+    {
+      "path": "library/publish_files/lookUpTable_VAULT_ECHOES_BUY_0.csv",
+      "size": 1358804,
+      "sha256": "c35cf88a44309b6ab8a40e8af20785d0f6ef9cce8d78754f242cecee2de32419"
+    }
+  ],
+  "frontendFiles": [
+    {
+      "path": "frontend/dist/assets/asset_manifest.json",
+      "size": 2101,
+      "sha256": "bcddc5accbfc37ceb791e9d2976dcedf3d18a4b7f28f450ea84523acca7c1d04"
+    },
+    {
+      "path": "frontend/dist/assets/audio/big-win.wav",
+      "size": 603332,
+      "sha256": "f57c168a768d34f74d65c5816d836e3e1fa7e3e0e10828b72119f44da13df67e"
+    },
+    {
+      "path": "frontend/dist/assets/audio/button-paper.wav",
+      "size": 26504,
+      "sha256": "8f378f8e1a1cfc1e9b831e9172b7c8900045f82010aa717d55cf16a005236de1"
+    },
+    {
+      "path": "frontend/dist/assets/audio/chapter-turn.wav",
+      "size": 324620,
+      "sha256": "c7e8ba927e6e701716619c7f83cd5a29de829c94ea7a89d6200ef6c0f51df730"
+    },
+    {
+      "path": "frontend/dist/assets/audio/codicil-open.wav",
+      "size": 610388,
+      "sha256": "4e97e78e09b79fe2df7035d7815645795bed2a2771989a3732c9b77f541a9941"
+    },
+    {
+      "path": "frontend/dist/assets/audio/coin-collect.wav",
+      "size": 185264,
+      "sha256": "9d25c640a2c069d76683dc3eed87ac66f90e35d2fc359c42a9be71820d56d8d8"
+    },
+    {
+      "path": "frontend/dist/assets/audio/max-inheritance.wav",
+      "size": 1173104,
+      "sha256": "3336eb9a18aa4cdc2adfe638d001240dbaca2545f0b6e8b004a23a1e94b6f67a"
+    },
+    {
+      "path": "frontend/dist/assets/audio/multiplier-rise.wav",
+      "size": 208196,
+      "sha256": "616fd53011f32382a23997232adcdde5cd0874c444c8ae88200a7d5ab2652f1a"
+    },
+    {
+      "path": "frontend/dist/assets/audio/music-inheritance.ogg",
+      "size": 2431278,
+      "sha256": "890fd4efcf137e34638c6797d57aa3773b174ed5538cb1079b174be0cbd49f17"
+    },
+    {
+      "path": "frontend/dist/assets/audio/MUSIC-LICENSES.md",
+      "size": 879,
+      "sha256": "4da53a11f62cd5773aaeb5c1eb3372fadaccdf1cb7a42b1045992b50dc5fe121"
+    },
+    {
+      "path": "frontend/dist/assets/audio/omen-tease.wav",
+      "size": 183672,
+      "sha256": "c44c89704d10321ba40fb1837705ce916964a02462a19e796783f2db16d25e97"
+    },
+    {
+      "path": "frontend/dist/assets/audio/reel-stop.wav",
+      "size": 47672,
+      "sha256": "2345c67f763dae85803f3afd8ea160e3bc4fe4683273e70b3a24728e6d3128da"
+    },
+    {
+      "path": "frontend/dist/assets/audio/retrigger.wav",
+      "size": 366956,
+      "sha256": "6c487fbbf939f29221501ceec74d12d31cfae10347ea36029104f9737027c772"
+    },
+    {
+      "path": "frontend/dist/assets/audio/seance-rise.wav",
+      "size": 497492,
+      "sha256": "51a3ffa2e9756166ea912f5b0a45e59d18f2dd9135723c401743dc64db9b17d8"
+    },
+    {
+      "path": "frontend/dist/assets/audio/spin-whisper.wav",
+      "size": 402410,
+      "sha256": "eb26bcaf86f893032dccfa626755e99659ca1b774c2ac78858ed5d6ffb5e0d46"
+    },
+    {
+      "path": "frontend/dist/assets/audio/vault-lock.wav",
+      "size": 81188,
+      "sha256": "3fd879f1b2386e49b0ff8a39a14727b4de63be22107581faa6505a7108ff66d1"
+    },
+    {
+      "path": "frontend/dist/assets/audio/vault-open.wav",
+      "size": 462212,
+      "sha256": "572042ad67a4d1c5ee30a6f35e21fe39cc3ecee3886654814ddbfb303eae9065"
+    },
+    {
+      "path": "frontend/dist/assets/audio/wax-stamp.wav",
+      "size": 232892,
+      "sha256": "87913c7e41940673528060a90531a704be7f7f08c500c2a7fd8bedc23c8644ab"
+    },
+    {
+      "path": "frontend/dist/assets/audio/will-open.wav",
+      "size": 426932,
+      "sha256": "41bef41749dc08637ce62fc5fb8494fd3cce26db7c7eabf54691f4263ed41db8"
+    },
+    {
+      "path": "frontend/dist/assets/audio/win-chime.wav",
+      "size": 215252,
+      "sha256": "0feb90ded33115680bb33a4273ccfce9c9ce055164acf6c66e9ea085f728d61c"
+    },
+    {
+      "path": "frontend/dist/assets/audio/win-high.wav",
+      "size": 402232,
+      "sha256": "84f0f8e4b75e6331853b643afd3f3486716bb4b459a6755505502097403a832c"
+    },
+    {
+      "path": "frontend/dist/assets/audio/win-low.wav",
+      "size": 137636,
+      "sha256": "902be5460fd98859d1c0ab916938d5b12f9653cbb1de999f303f9aa46f23cf31"
+    },
+    {
+      "path": "frontend/dist/assets/audio/win-medium.wav",
+      "size": 278756,
+      "sha256": "408cae85ebfda5f642ad6c538188df27c695f63b25a5fa947736269f5eaa50e4"
+    },
+    {
+      "path": "frontend/dist/assets/audio_manifest.json",
+      "size": 1285,
+      "sha256": "16be844bb2bf34d272e120137d5818c80b2877ba451dd7c23b44fefbe5b78383"
+    },
+    {
+      "path": "frontend/dist/assets/blackthorn-hall.webp",
+      "size": 740112,
+      "sha256": "80dcb04a598c08ce9ffc2154a16560d21b4b75c746814a9cbb3b1a6659440cf3"
+    },
+    {
+      "path": "frontend/dist/assets/features/final-codicil.webp",
+      "size": 264098,
+      "sha256": "2268e583936f41d607e3592bb0773c910016bb30810d0a24062a2ccc9025d20e"
+    },
+    {
+      "path": "frontend/dist/assets/features/midnight-seance.webp",
+      "size": 194234,
+      "sha256": "451a567d8b042b9e183ac8e211b0bb6bffeff221abe7ed4e6ead333365182112"
+    },
+    {
+      "path": "frontend/dist/assets/features/sealed-will.webp",
+      "size": 231000,
+      "sha256": "106766cc984487f63992eed751a48c8c3fd3ba7234bd6952d5dd4e44bede22de"
+    },
+    {
+      "path": "frontend/dist/assets/features/vault-echoes.webp",
+      "size": 222284,
+      "sha256": "249777a9ae2fd7e99a934410ee41fec0e9d108964489fbc4f55651642dcdbbcd"
+    },
+    {
+      "path": "frontend/dist/assets/index-DE1FpsTN.css",
+      "size": 72049,
+      "sha256": "461825a2188a1c8c3704cd7f85587b373e18fb1c203b9c92286ebd94541aa326"
+    },
+    {
+      "path": "frontend/dist/assets/index-DuSLbKld.js",
+      "size": 153217,
+      "sha256": "82a7f2d98651e36371064f4144f46c7eff3eca886528b50eb54942c90583c46a"
+    },
+    {
+      "path": "frontend/dist/assets/index-gjIXi295.js",
+      "size": 6218,
+      "sha256": "241be3dbe58af719dd03492c9238474af05a006bd542d234c5e15c221cd3ce92"
+    },
+    {
+      "path": "frontend/dist/assets/marketing/the-inheritance-thumbnail-master.png",
+      "size": 3341190,
+      "sha256": "29c0f0abf9df35135548fda065f00bb93f3a356a423c9c2f1cf3b4367f264679"
+    },
+    {
+      "path": "frontend/dist/assets/README.md",
+      "size": 981,
+      "sha256": "47bb0d132e749a8185d8f341f6f05cb311a600af23ba6afc3d163dd7e30200e5"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/candelabrum.webp",
+      "size": 78180,
+      "sha256": "fece59e6e85236b55cc0c02a651e2b0ff76318d9e9d8082ab789468767fa7e06"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/executor.webp",
+      "size": 68520,
+      "sha256": "d08e1d371243e955380eb972adaf951f0dbdb7933169a1a0a4fd6793c7951c53"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/heiress.webp",
+      "size": 70772,
+      "sha256": "fc60ce76a92629275050454c39239409dd17cdacac912d1001ff720c5db49f65"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/lilies.webp",
+      "size": 104572,
+      "sha256": "866d4796b8aadb2b027f5d754edd70b6a04065854366eafd54ae5280fce3d7d9"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/pocket-watch.webp",
+      "size": 96892,
+      "sha256": "5edd494bcc044168eb910f7a49acc3318610d528f451cb3e20b14965f3eb58a2"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/poison-ring.webp",
+      "size": 91770,
+      "sha256": "a7b3f0d93d56420a762e90077404b260b1c57be455eb776bbe5e56b10fd44b0e"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/raven-key.webp",
+      "size": 61914,
+      "sha256": "af09bed2e3cfe85d1ad480dccd70ce7af15f5efab19733d46ddf3c417b21ca32"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/seance-mirror.webp",
+      "size": 104876,
+      "sha256": "daf90777154f5df3bf38af83a1cc8f6e93024e586659d8aa6e727ef8097ecd97"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/stag.webp",
+      "size": 89686,
+      "sha256": "7530f0898327e177b1163315212cfe8329f704a2b289aae94b357089e34cc4b5"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/testament.webp",
+      "size": 106848,
+      "sha256": "81faaf9cd25a9f1ad2420473b56700a84639f5b6033689f282e8a0a82e1ffa21"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/vault-scatter.webp",
+      "size": 109906,
+      "sha256": "b1c84247cd3dedb72f9fa35c52a6a2fd941c37942351cfa5fff06b51372349a4"
+    },
+    {
+      "path": "frontend/dist/assets/symbols/wax-wild.webp",
+      "size": 123676,
+      "sha256": "e1077d2f70d2edcc387ab17b9c76bdbdc87e105ef26b0cd3052486c194d40a12"
+    },
+    {
+      "path": "frontend/dist/assets/transitions/chapter-codicil.webp",
+      "size": 1131404,
+      "sha256": "337c1c19211a8df202df2ac198c754ebe45534a6e0b9156fc2c999667cd32ca3"
+    },
+    {
+      "path": "frontend/dist/assets/transitions/chapter-seance.webp",
+      "size": 922918,
+      "sha256": "e283fe2aa195bf1f8fd19d768ff9b25d6c8f9eb4bfde1200cf5159f2e8fdfea5"
+    },
+    {
+      "path": "frontend/dist/assets/transitions/chapter-vault.webp",
+      "size": 972642,
+      "sha256": "6d8683b11e71bcbcf88431102112e4b6f397da99a750d1f058a5636b08d28d7f"
+    },
+    {
+      "path": "frontend/dist/assets/transitions/chapter-will.webp",
+      "size": 920042,
+      "sha256": "46bfdf26958d3e922edc0e5c97d4ffca80d035d3477931091ad754be2c06577a"
+    },
+    {
+      "path": "frontend/dist/index.html",
+      "size": 765,
+      "sha256": "065c61af0c7a53175ecc3419f60e6bace413e065d57952b5834f35909c499500"
+    }
+  ]
+}

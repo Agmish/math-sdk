@@ -8,29 +8,19 @@ on:
     paths:
       - ".github/workflows/the-inheritance-release.yml"
       - "games/2_0_The_Inheritance/**"
-      - "tools/the-inheritance-*.py"
-      - "tools/the-inheritance-local-rgs/**"
+      - "tools/the-inheritance-release-proof-v2.py"
       - "tools/assemble-the-inheritance-submission.py"
-      - "web-sdk/apps/the-inheritance/**"
-      - "web-sdk/packages/**"
-      - "web-sdk/package.json"
-      - "web-sdk/pnpm-lock.yaml"
-      - "web-sdk/pnpm-workspace.yaml"
-      - "web-sdk/turbo.json"
+      - "utils/analysis/distribution_functions.py"
+      - "utils/rgs_verification.py"
       - "requirements.txt"
   pull_request:
     paths:
       - ".github/workflows/the-inheritance-release.yml"
       - "games/2_0_The_Inheritance/**"
-      - "tools/the-inheritance-*.py"
-      - "tools/the-inheritance-local-rgs/**"
+      - "tools/the-inheritance-release-proof-v2.py"
       - "tools/assemble-the-inheritance-submission.py"
-      - "web-sdk/apps/the-inheritance/**"
-      - "web-sdk/packages/**"
-      - "web-sdk/package.json"
-      - "web-sdk/pnpm-lock.yaml"
-      - "web-sdk/pnpm-workspace.yaml"
-      - "web-sdk/turbo.json"
+      - "utils/analysis/distribution_functions.py"
+      - "utils/rgs_verification.py"
       - "requirements.txt"
 
 concurrency:
@@ -45,9 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 50
     env:
-      THE_INHERITANCE_RELEASE_BUILD_DIR: ${{ github.workspace }}/web-sdk/apps/the-inheritance/build-release/ci-rtp_96
-      PUBLIC_THE_INHERITANCE_RTP: "0.96"
-      THE_INHERITANCE_RTP: "96"
       CI: "true"
     steps:
       - uses: actions/checkout@v4
@@ -59,6 +46,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.16.0"
+          cache: npm
+          cache-dependency-path: games/2_0_The_Inheritance/frontend/package-lock.json
 
       - name: Install Math SDK dependencies
         timeout-minutes: 8
@@ -69,70 +58,46 @@ jobs:
           bootstrap_status=$?
           python -m pip install -r requirements.txt > artifacts/math-dependency-install.log 2>&1
           dependency_status=$?
+          python -m pip install -e . > artifacts/math-editable-install.log 2>&1
+          editable_status=$?
           cat artifacts/pip-bootstrap.log
           cat artifacts/math-dependency-install.log
-          if [ $bootstrap_status -ne 0 ] || [ $dependency_status -ne 0 ]; then
+          cat artifacts/math-editable-install.log
+          if [ $bootstrap_status -ne 0 ] || [ $dependency_status -ne 0 ] || [ $editable_status -ne 0 ]; then
             exit 1
           fi
 
-      - name: Install Web SDK dependencies
-        timeout-minutes: 10
-        working-directory: web-sdk
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
-        run: |
-          corepack enable
-          pnpm install --frozen-lockfile
+      - name: Install canonical Front End dependencies
+        timeout-minutes: 8
+        working-directory: games/2_0_The_Inheritance/frontend
+        run: npm ci
 
       - name: Restore Playwright browser cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('web-sdk/pnpm-lock.yaml') }}
+          key: playwright-${{ runner.os }}-${{ hashFiles('games/2_0_The_Inheritance/frontend/package-lock.json') }}
 
-      - name: Run The Inheritance release proof
-        timeout-minutes: 20
+      - name: Install Playwright Chromium
+        timeout-minutes: 10
+        working-directory: games/2_0_The_Inheritance/frontend
         run: |
-          mkdir -p artifacts
+          set +e
+          npx --no-install playwright-core install --with-deps chromium > ../../../artifacts/playwright-install.log 2>&1
+          status=$?
+          cat ../../../artifacts/playwright-install.log
+          exit $status
+
+      - name: Run canonical Stake release proof
+        timeout-minutes: 30
+        run: |
           set +e
           python tools/the-inheritance-release-proof-v2.py > artifacts/release-proof.log 2>&1
           status=$?
           cat artifacts/release-proof.log
           exit $status
 
-      - name: Install Playwright Chromium
-        timeout-minutes: 10
-        working-directory: web-sdk
-        run: |
-          set +e
-          pnpm --filter the-inheritance exec playwright install --with-deps chromium > ../artifacts/playwright-install.log 2>&1
-          status=$?
-          cat ../artifacts/playwright-install.log
-          exit $status
-
-      - name: Run The Inheritance browser smoke QA
-        timeout-minutes: 12
-        working-directory: web-sdk
-        env:
-          NPM_CONFIG_NODE_LINKER: hoisted
-          THE_INHERITANCE_RTP: "96"
-          THE_INHERITANCE_E2E_STATIC_DIR: ${{ github.workspace }}/web-sdk/apps/the-inheritance/build-release/ci-rtp_96
-        run: |
-          set +e
-          pnpm --filter the-inheritance e2e-smoke > ../artifacts/browser-smoke.log 2>&1
-          desktop_status=$?
-          pnpm --filter the-inheritance e2e-mobile >> ../artifacts/browser-smoke.log 2>&1
-          mobile_status=$?
-          cat ../artifacts/browser-smoke.log
-          if [ $desktop_status -ne 0 ] || [ $mobile_status -ne 0 ]; then
-            exit 1
-          fi
-
-      - name: Write machine-readable release summary
-        timeout-minutes: 3
-        run: python games/2_0_The_Inheritance/tools/write_ci_summary.py
-
-      - name: Assemble Stake submission bundle
+      - name: Assemble exact Stake ACP roots
         timeout-minutes: 5
         run: python tools/assemble-the-inheritance-submission.py
 
@@ -140,15 +105,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: the-inheritance-stake-submission-rtp96
+          name: the-inheritance-stake-submission
           path: |
-            artifacts/the-inheritance-submission-rtp96/**
+            artifacts/the-inheritance-submission/**
             artifacts/the-inheritance-ci-summary.json
             artifacts/pip-bootstrap.log
             artifacts/math-dependency-install.log
-            artifacts/release-proof.log
+            artifacts/math-editable-install.log
             artifacts/playwright-install.log
-            artifacts/browser-smoke.log
-            web-sdk/apps/the-inheritance/playwright-report/**
-            web-sdk/apps/the-inheritance/test-results/**
+            artifacts/release-proof.log
+            games/2_0_The_Inheritance/frontend/visual-qa/**
           if-no-files-found: warn

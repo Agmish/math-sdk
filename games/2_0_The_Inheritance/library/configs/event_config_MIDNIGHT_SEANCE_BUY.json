@@ -1,0 +1,230 @@
+{
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "cc684915",
+    "feature": "midnight_seance",
+    "frames": 10,
+    "phases": [
+      "midnight_seance"
+    ]
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "Midnight Seance",
+    "mode": "MIDNIGHT_SEANCE_BUY",
+    "feature": "midnight_seance"
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "MIRROR"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        }
+      ],
+      [
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "MIRROR"
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "MIRROR"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      1,
+      2,
+      3
+    ],
+    "gameType": "basegame"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "midnight_seance",
+    "source": "feature_bet",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 4,
+        "row": 1
+      }
+    ]
+  },
+  "freeSpinTrigger": {
+    "type": "freeSpinTrigger",
+    "feature": "midnight_seance",
+    "totalFs": 10
+  },
+  "updateFreeSpin": {
+    "type": "updateFreeSpin",
+    "amount": 0,
+    "total": 10,
+    "stage": "midnight_seance"
+  },
+  "seancePossess": {
+    "type": "seancePossess",
+    "reels": [
+      3
+    ],
+    "multiplier": 1,
+    "stage": "midnight_seance"
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 0
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "midnight_seance",
+    "totalWin": 0
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 0
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "MIRROR",
+    "amount": 4000,
+    "positions": [
+      {
+        "reel": 3,
+        "row": 0
+      },
+      {
+        "reel": 3,
+        "row": 2
+      }
+    ],
+    "stage": "midnight_seance",
+    "evaluationSource": "spiritAward"
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 4000,
+    "wins": [
+      {
+        "symbol": "MIRROR",
+        "kind": 2,
+        "ways": null,
+        "basePay": 4000,
+        "multiplier": 1,
+        "win": 4000,
+        "positions": [
+          {
+            "reel": 3,
+            "row": 0
+          },
+          {
+            "reel": 3,
+            "row": 2
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 3,
+        "row": 0
+      },
+      {
+        "reel": 3,
+        "row": 2
+      }
+    ],
+    "gameType": "freegame",
+    "evaluationSource": "spiritAward"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 4000,
+    "winLevel": 7
+  },
+  "retrigger": {
+    "type": "retrigger",
+    "feature": "midnight_seance",
+    "addedSpins": 2,
+    "totalFs": 12,
+    "symbol": "MIRROR",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 3
+      },
+      {
+        "reel": 4,
+        "row": 1
+      }
+    ]
+  }
+}

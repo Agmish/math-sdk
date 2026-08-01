@@ -1,10 +1,13 @@
 # Keep generated math submission artifacts stable across operating systems.
+games/2_0_The_Inheritance/game_contract.json text eol=lf
+games/2_0_The_Inheritance/frontend/src/lib/fixtures/published-books.json text eol=lf
 games/2_0_The_Inheritance/library/publish_files/*.json text eol=lf
 games/2_0_The_Inheritance/library/publish_files/*.csv text eol=lf
 games/2_0_The_Inheritance/library/publish_files/*.zst -text
 games/2_0_The_Inheritance/library/rtp_profiles/**/*.json text eol=lf
 games/2_0_The_Inheritance/library/rtp_profiles/**/*.csv text eol=lf
 games/2_0_The_Inheritance/library/configs/*.json text eol=lf
+games/2_0_The_Inheritance/library/forces/*.json text eol=lf
 games/2_0_The_Inheritance/release/*.json text eol=lf
 games/2_0_The_Inheritance/release/**/*.json text eol=lf
 games/2_0_The_Inheritance/release/**/*.csv text eol=lf
