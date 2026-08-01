@@ -1,0 +1,32 @@
+{
+  "music": {
+    "base": "/assets/audio/music-inheritance.ogg",
+    "sealedWill": "/assets/audio/music-inheritance.ogg",
+    "vault": "/assets/audio/music-inheritance.ogg",
+    "seance": "/assets/audio/music-inheritance.ogg",
+    "finalCodicil": "/assets/audio/music-inheritance.ogg"
+  },
+  "effects": {
+    "spin": "/assets/audio/spin-whisper.wav",
+    "reelStop": "/assets/audio/reel-stop.wav",
+    "waxWild": "/assets/audio/wax-stamp.wav",
+    "vaultLock": "/assets/audio/vault-lock.wav",
+    "collect": "/assets/audio/coin-collect.wav",
+    "multiplierRise": "/assets/audio/multiplier-rise.wav",
+    "win": "/assets/audio/win-chime.wav",
+    "winLow": "/assets/audio/win-low.wav",
+    "winMedium": "/assets/audio/win-medium.wav",
+    "winHigh": "/assets/audio/win-high.wav",
+    "bigWin": "/assets/audio/big-win.wav",
+    "maxWin": "/assets/audio/max-inheritance.wav",
+    "button": "/assets/audio/button-paper.wav",
+    "tease": "/assets/audio/omen-tease.wav",
+    "sealedWill": "/assets/audio/will-open.wav",
+    "vault": "/assets/audio/vault-open.wav",
+    "seance": "/assets/audio/seance-rise.wav",
+    "finalCodicil": "/assets/audio/codicil-open.wav",
+    "chapterTurn": "/assets/audio/chapter-turn.wav",
+    "retrigger": "/assets/audio/retrigger.wav"
+  },
+  "voices": {}
+}

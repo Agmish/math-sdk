@@ -1,0 +1,370 @@
+{
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "92f30757",
+    "feature": "regular",
+    "frames": 1,
+    "phases": [
+      "regular"
+    ]
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        }
+      ],
+      [
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "gameType": "basegame"
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 0
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 0
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 40,
+    "wins": [
+      {
+        "symbol": "LETTER",
+        "kind": 3,
+        "ways": 4,
+        "basePay": 10,
+        "multiplier": 1.0,
+        "win": 40,
+        "positions": [
+          {
+            "reel": 0,
+            "row": 0
+          },
+          {
+            "reel": 0,
+            "row": 1
+          },
+          {
+            "reel": 1,
+            "row": 0
+          },
+          {
+            "reel": 1,
+            "row": 1
+          },
+          {
+            "reel": 2,
+            "row": 0
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 0,
+        "row": 0
+      },
+      {
+        "reel": 0,
+        "row": 1
+      },
+      {
+        "reel": 1,
+        "row": 0
+      },
+      {
+        "reel": 1,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 0
+      }
+    ],
+    "gameType": "basegame",
+    "evaluationSource": "visibleWays"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 40,
+    "winLevel": 2
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "The Sealed Will",
+    "mode": "BASE",
+    "feature": "sealed_will"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "sealed_will",
+    "source": "natural",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 4,
+        "row": 0
+      }
+    ]
+  },
+  "freeSpinTrigger": {
+    "type": "freeSpinTrigger",
+    "feature": "sealed_will",
+    "totalFs": 8
+  },
+  "updateFreeSpin": {
+    "type": "updateFreeSpin",
+    "amount": 0,
+    "total": 8,
+    "stage": "sealed_will"
+  },
+  "expandWild": {
+    "type": "expandWild",
+    "reel": 2,
+    "originRow": 0,
+    "multiplier": 1,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "sealed_will"
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "WILD",
+    "amount": 130,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "sealed_will",
+    "evaluationSource": "sealedWillAward"
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "sealed_will",
+    "totalWin": 1000
+  },
+  "expandedBoard": {
+    "type": "expandedBoard",
+    "board": [
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "RING"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ]
+    ],
+    "reel": 2
+  },
+  "seancePossess": {
+    "type": "seancePossess",
+    "reels": [
+      3
+    ],
+    "multiplier": 1,
+    "stage": "midnight_seance"
+  },
+  "vaultState": {
+    "type": "vaultState",
+    "locks": 1,
+    "respins": 5,
+    "collected": 340,
+    "stage": "vault_echoes"
+  },
+  "lockPrize": {
+    "type": "lockPrize",
+    "position": {
+      "reel": 2,
+      "row": 0
+    },
+    "value": 340,
+    "stage": "vault_echoes"
+  },
+  "codicilFusion": {
+    "type": "codicilFusion",
+    "stages": [
+      "will",
+      "vault",
+      "seance"
+    ]
+  }
+}

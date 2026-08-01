@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "gameID": "2_0_The_Inheritance",
+  "rtp": 0.96,
+  "generatedFrom": "Stake Math SDK",
+  "publicationFolder": "games/2_0_The_Inheritance/library/publish_files",
+  "contract": {
+    "file": "game_contract.json",
+    "sha256": "3ff4e1a6ca574594287e6df8ac8ce01fb90b35509c61def024d127cbf084271f"
+  },
+  "files": [
+    {
+      "file": "library/publish_files/books_BASE.jsonl.zst",
+      "size": 1481803,
+      "sha256": "a22cfdbd63eae4344ef83a45d453a61bcf3f4bbefff6a1cb59e8894e6bfeb7a9"
+    },
+    {
+      "file": "library/publish_files/books_FINAL_CODICIL_BUY.jsonl.zst",
+      "size": 10855670,
+      "sha256": "f6886d29dbd86286919b39917ad93c16dd17711cb3dd4531ae49b5c65f765d20"
+    },
+    {
+      "file": "library/publish_files/books_HEIRLOOM_ANTE.jsonl.zst",
+      "size": 1856801,
+      "sha256": "55c4178b3523f4de157f7154de66bee45efcbde661a94e5752dcb5a82bfad14f"
+    },
+    {
+      "file": "library/publish_files/books_MIDNIGHT_SEANCE_BUY.jsonl.zst",
+      "size": 7460787,
+      "sha256": "fae68339a04f5a90d4173cd93753c87eb3c2907dbd537c4c13c1db751e59fcb2"
+    },
+    {
+      "file": "library/publish_files/books_SEALED_WILL_BUY.jsonl.zst",
+      "size": 10627591,
+      "sha256": "00b675f598e78a72b7d703041ff7ff7f16febe947a2cabe469342039fdd8060b"
+    },
+    {
+      "file": "library/publish_files/books_VAULT_ECHOES_BUY.jsonl.zst",
+      "size": 4914561,
+      "sha256": "94bc66839feb7700b4acc36cf341f1631519fd0ba3a66347363ffa53f196d39c"
+    },
+    {
+      "file": "library/publish_files/index.json",
+      "size": 1049,
+      "sha256": "b898216ed98b78414d076e2d8bd80bfd4bd9aee122e6d1472615316b61c1dc29"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_BASE_0.csv",
+      "size": 1140155,
+      "sha256": "45fb27acbbb127bc4770e3dfeee73874fb2d96f06d1326a7d2f8fe8423f51074"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_FINAL_CODICIL_BUY_0.csv",
+      "size": 1369083,
+      "sha256": "7771ca1bfd18c96a4411bfefec48632bf557831914486eea9968589198fc465e"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_HEIRLOOM_ANTE_0.csv",
+      "size": 1172879,
+      "sha256": "14b9b0a55b6bcf64ad319d3e81d3a0c37875addee8c2db766cc712a6c810eea0"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_MIDNIGHT_SEANCE_BUY_0.csv",
+      "size": 1368879,
+      "sha256": "532e95bd22ca6b3adae6b7c61f0e5e8c8a60c85c2e5001973ad205d0cf0af835"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_SEALED_WILL_BUY_0.csv",
+      "size": 1343622,
+      "sha256": "16b040e3ca0c2750b89444cf566153e6c2ea364800b63be8facce4e978cf7ee4"
+    },
+    {
+      "file": "library/publish_files/lookUpTable_VAULT_ECHOES_BUY_0.csv",
+      "size": 1358804,
+      "sha256": "c35cf88a44309b6ab8a40e8af20785d0f6ef9cce8d78754f242cecee2de32419"
+    }
+  ]
+}

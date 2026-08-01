@@ -1,166 +1,36 @@
-# The Inheritance Design Notes
+# Math design contract
 
-The canonical cross-SDK product design is maintained in
-`web-sdk/apps/the-inheritance/docs/GAME_DESIGN_DESCRIPTION.md`. This math-side
-file records the currently implemented numeric and feature rules.
+## Probability source
 
-## Game identity
+`math_profile.py` is authoritative. Every mode has integer weights totaling 1,000,000. For a mode with cost `C`, its lookup table satisfies:
 
-- Public game name: The Inheritance
-- SDK folder: `2_0_The_Inheritance`
-- Theme: mystery mansion / legacy / hidden vault / inheritance hunt
-- Main colors: black, antique gold, dark green, warm mansion lighting
+`sum(weight × payoutMultiplierInt) = 0.96 × C × 100 × 1,000,000`
 
-## Game layout
+`payoutMultiplierInt` is the RGS integer representation of an x-multiplier (100 = 1.00×). Each profile contains a 15,000× result at one-in-one-million weight and controlled middle outcomes to avoid making feature bets systematically favorable to the player.
 
-- 5 reels x 5 rows
-- 15 paylines, matching the supplied payline image
-- RTP configuration target: 97%
-- Volatility target: High
-- Max win target: 5000x
-- Row index 0 is the top row
-- Row index 4 is the bottom row
+## Stateless books
 
-## Payline paths
+The RGS selects one book using its lookup weight. That book includes the complete result and final payout. No key collection, mansion level, legacy credit, progressive meter, or other player state crosses the round boundary.
 
-| Line | Row path |
-|---:|---|
-| 1 | `[0, 0, 0, 0, 0]` |
-| 2 | `[1, 1, 1, 1, 1]` |
-| 3 | `[2, 2, 2, 2, 2]` |
-| 4 | `[3, 3, 3, 3, 3]` |
-| 5 | `[4, 4, 4, 4, 4]` |
-| 6 | `[0, 1, 2, 3, 4]` |
-| 7 | `[4, 3, 2, 1, 0]` |
-| 8 | `[0, 1, 0, 1, 0]` |
-| 9 | `[1, 0, 1, 0, 1]` |
-| 10 | `[1, 2, 1, 2, 1]` |
-| 11 | `[2, 1, 2, 1, 2]` |
-| 12 | `[2, 3, 2, 3, 2]` |
-| 13 | `[3, 2, 3, 2, 3]` |
-| 14 | `[3, 4, 3, 4, 3]` |
-| 15 | `[4, 3, 4, 3, 4]` |
+Every book guarantees:
 
-## Symbol model
+1. integer ID matching its lookup row;
+2. sequential event indices beginning at zero;
+3. 5×4 reveal boards;
+4. monotonically increasing `setTotalWin` values;
+5. a final `setTotalWin` and `finalWin` equal to `payoutMultiplier`;
+6. an integer payout divisible by 10 and capped at 1,500,000 (15,000×).
 
-Total symbols: 22
+## Feature event contracts
 
-- 1 scatter
-- 5 multiplier symbols
-- 1 wild
-- 15 regular paying symbols
+- Expanding Wild: `reveal → expandWild → expandedBoard → winInfo → finalWin`
+- Sealed Will: trigger followed by complete free-spin updates and expanding wild events
+- Vault Echoes: trigger followed by six reveal, lock-prize, and vault-state frames
+- Midnight Seance: trigger followed by free-spin updates and possessed-reel events
+- Final Codicil: codicil fusion followed by complete Will, Vault, and Seance stages
 
-## Special symbols
+Feature bets with a zero payout still contain and display the complete purchased feature. A zero result is not left open: all modes use `autoEndRoundDisabled: false`.
 
-| Math symbol | Asset name | Role |
-|---|---|---|
-| `S` | Vault_Scatter | Bonus trigger |
-| `M2` | Diamond Seal Multiplier 2 | current-spin x2 multiplier |
-| `M5` | Diamond Seal Multiplier 5 | current-spin x5 multiplier |
-| `M10` | Diamond Seal Multiplier 10 | current-spin x10 multiplier |
-| `M20` | Diamond Seal Multiplier 20 | current-spin x20 multiplier |
-| `M100` | Diamond Seal Multiplier 100 | current-spin x100 multiplier |
-| `W` | Wild | Wild substitute |
+## Determinism and reproducibility
 
-## Paying symbols
-
-| Math symbol | Asset name |
-|---|---|
-| `H1` | Heiress |
-| `H2` | Covered Portrait Mystery |
-| `H3` | Treasure Chest |
-| `H4` | Legacy Key |
-| `H5` | Diamond Brooch |
-| `H6` | Antique Pocket Watch |
-| `H7` | Magnifying Glass |
-| `H8` | will |
-| `H9` | Old Letter |
-| `L1` | A |
-| `L2` | K |
-| `L3` | Q |
-| `L4` | J |
-| `L5` | 10 |
-| `L6` | Family Crest |
-
-## Buy menu
-
-Frontend `BUY` opens a Buy menu.
-
-| Option | Internal mode | Cost | Behavior |
-|---|---|---:|---|
-| Scatter Boost | `scatter_boost` | 3x base bet per spin | Direct free-spin quota is `10.8%` versus Base `10.0%`; including the separate `0.1%` wincap feature-entry path, total forced feature-entry allocation is `10.9%` versus Base `10.1%` |
-| Bonus Buy | `bonus` | 100x base bet | Starts a bought 3-, 4-, or 5-scatter entry state and awards 10 free spins |
-
-Scatter chance enhancer target:
-
-```text
-Normal 3-scatter trigger design reference: 1 in 255
-Enhancer target: 8% relative increase to the 3-scatter trigger chance
-Enhancer target reference: about 1 in 236 before final tuning
-```
-
-## First version rules
-
-- Free spins trigger:
-  - 3 scatters = 8 free spins
-  - 4 scatters = 12 free spins
-  - 5 scatters = 15 free spins
-- Free spin retrigger:
-  - 2 scatters = +3 free spins
-  - 3 scatters = +5 free spins
-  - 4 scatters = +8 free spins
-  - 5 scatters = +12 free spins
-- Bonus Buy entry can start as 3-, 4-, or 5-scatter entry according to configured entry weights and awards 10 free spins
-- Multiplier values: x2, x5, x10, x20, x100
-- Multiplier implementation: natural reel-strip Diamond Seal symbols in base and free-spin strips
-- Base multipliers remain possible, including x100, at lower frequency than free/bought spins
-- Free and bought bonus spins use higher-frequency multiplier reel strips
-- Multiplier application: highest Diamond Seal visible on the current spin only, applied globally
-- Multiplier reset: every spin starts from x1 unless a Diamond Seal lands
-- No stacking, persistence, or carryover
-
-## Legacy Key persistent scatter credit
-
-- `H4` Legacy Key is rare and is also a normal paying symbol.
-- Legacy Keys collect only during paid `base` and `scatter_boost` spins.
-- Legacy Keys do not collect during free spins.
-- Legacy Keys do not collect during Bonus Buy.
-- The collection target is 10 keys.
-- Collection progress persists between paid spins and must be stored by the frontend/server player state.
-- When a player starts an eligible paid spin with 10 keys, the spin receives one virtual Vault scatter.
-- If that spin lands 2 or more natural Vaults, the virtual Vault raises the effective scatter count by one.
-- 2 natural + 1 virtual Vault triggers 8 free spins.
-- 3 natural + 1 virtual Vault triggers 12 free spins.
-- Effective counts above 5 use the configured 5-scatter award cap.
-- After the credit is used and the free game is triggered, key collection resets to 0.
-- Bonus Buy does not use this mechanic.
-- Free spins do not use this mechanic.
-
-`legacyScatterCredit` event fields:
-
-```text
-collected
-target
-virtualScatters
-naturalScatters
-effectiveScatters
-used
-gameType
-```
-
-## Reel set
-
-- `BR0.csv`: base-game strip with low-frequency natural multipliers, including all five Diamond Seal values
-- `FR0.csv`: normal free-spin / bought-bonus strip with higher-frequency natural multipliers
-- `FRWCAP.csv`: wincap-support free-spin strip with natural multipliers
-
-## Frontend win effect thresholds
-
-- Big Win: 12x bet
-- Mega Win: 24x bet
-- Epic Win: 50x+ bet
-- Legendary Win: 100x+
-
-## Important note
-
-This is the first math scaffold. The reel strips and paytable are starter values and must be tuned after the first simulation reports. Full RTP/math certification is not complete yet.
+Book variation uses a stable FNV-1a-derived seed from mode, ID, and outcome. Running the publisher twice with the same source and book count produces byte-identical lookup data and deterministic JSON content. Zstandard output, hashes, force descriptions, and release manifests are rebuilt together.

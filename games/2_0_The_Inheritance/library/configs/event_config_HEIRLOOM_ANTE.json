@@ -1,0 +1,361 @@
+{
+  "ante": {
+    "type": "ante",
+    "costMultiplier": 3
+  },
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "166822de",
+    "feature": "regular",
+    "frames": 1,
+    "phases": [
+      "regular"
+    ]
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "gameType": "basegame"
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 120,
+    "wins": [
+      {
+        "symbol": "RING",
+        "kind": 3,
+        "ways": 4,
+        "basePay": 30,
+        "multiplier": 1.0,
+        "win": 120,
+        "positions": [
+          {
+            "reel": 0,
+            "row": 0
+          },
+          {
+            "reel": 0,
+            "row": 1
+          },
+          {
+            "reel": 1,
+            "row": 0
+          },
+          {
+            "reel": 1,
+            "row": 1
+          },
+          {
+            "reel": 2,
+            "row": 0
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 0,
+        "row": 0
+      },
+      {
+        "reel": 0,
+        "row": 1
+      },
+      {
+        "reel": 1,
+        "row": 0
+      },
+      {
+        "reel": 1,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 0
+      }
+    ],
+    "gameType": "basegame",
+    "evaluationSource": "visibleWays"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 120,
+    "winLevel": 3
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 120
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 120
+  },
+  "expandWild": {
+    "type": "expandWild",
+    "reel": 2,
+    "originRow": 1,
+    "multiplier": 3.0,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ]
+  },
+  "expandedBoard": {
+    "type": "expandedBoard",
+    "board": [
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "RING"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        },
+        {
+          "name": "WILD",
+          "wild": true
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ]
+    ],
+    "reel": 2
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "Vault of Echoes",
+    "mode": "HEIRLOOM_ANTE",
+    "feature": "vault_echoes"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "vault_echoes",
+    "source": "natural",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 3
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 4,
+        "row": 0
+      }
+    ]
+  },
+  "vaultState": {
+    "type": "vaultState",
+    "locks": 1,
+    "respins": 5,
+    "collected": 420,
+    "stage": "vault_echoes"
+  },
+  "lockPrize": {
+    "type": "lockPrize",
+    "position": {
+      "reel": 2,
+      "row": 0
+    },
+    "value": 420,
+    "stage": "vault_echoes"
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "KEY",
+    "amount": 420,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      }
+    ],
+    "stage": "vault_echoes",
+    "evaluationSource": "vaultCollection"
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "vault_echoes",
+    "totalWin": 2500
+  },
+  "freeSpinTrigger": {
+    "type": "freeSpinTrigger",
+    "feature": "sealed_will",
+    "totalFs": 8
+  },
+  "updateFreeSpin": {
+    "type": "updateFreeSpin",
+    "amount": 0,
+    "total": 8,
+    "stage": "sealed_will"
+  },
+  "seancePossess": {
+    "type": "seancePossess",
+    "reels": [
+      3
+    ],
+    "multiplier": 1,
+    "stage": "midnight_seance"
+  },
+  "codicilFusion": {
+    "type": "codicilFusion",
+    "stages": [
+      "will",
+      "vault",
+      "seance"
+    ]
+  }
+}

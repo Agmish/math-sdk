@@ -1,0 +1,271 @@
+{
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "f4a64e95",
+    "feature": "sealed_will",
+    "frames": 8,
+    "phases": [
+      "sealed_will"
+    ]
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "The Sealed Will",
+    "mode": "SEALED_WILL_BUY",
+    "feature": "sealed_will"
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "TESTAMENT"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ],
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "TESTAMENT"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        }
+      ],
+      [
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "TESTAMENT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      1,
+      2,
+      3
+    ],
+    "gameType": "basegame"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "sealed_will",
+    "source": "feature_bet",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 3
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 4,
+        "row": 1
+      }
+    ]
+  },
+  "freeSpinTrigger": {
+    "type": "freeSpinTrigger",
+    "feature": "sealed_will",
+    "totalFs": 8
+  },
+  "updateFreeSpin": {
+    "type": "updateFreeSpin",
+    "amount": 0,
+    "total": 8,
+    "stage": "sealed_will"
+  },
+  "expandWild": {
+    "type": "expandWild",
+    "reel": 2,
+    "originRow": 0,
+    "multiplier": 1,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "sealed_will"
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "WILD",
+    "amount": 250,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "sealed_will",
+    "evaluationSource": "sealedWillAward"
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 250,
+    "wins": [
+      {
+        "symbol": "WILD",
+        "kind": 4,
+        "ways": null,
+        "basePay": 250,
+        "multiplier": 1,
+        "win": 250,
+        "positions": [
+          {
+            "reel": 2,
+            "row": 0
+          },
+          {
+            "reel": 2,
+            "row": 1
+          },
+          {
+            "reel": 2,
+            "row": 2
+          },
+          {
+            "reel": 2,
+            "row": 3
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "gameType": "freegame",
+    "evaluationSource": "sealedWillAward"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 250,
+    "winLevel": 4
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 250
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "sealed_will",
+    "totalWin": 2000
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 2000
+  },
+  "retrigger": {
+    "type": "retrigger",
+    "feature": "sealed_will",
+    "addedSpins": 2,
+    "totalFs": 10,
+    "symbol": "TESTAMENT",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 4,
+        "row": 0
+      }
+    ]
+  }
+}

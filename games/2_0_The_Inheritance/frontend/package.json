@@ -1,0 +1,37 @@
+{
+  "name": "the-inheritance-slot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Original Blackthorn Estate 1,024-ways slot with four feature systems and exact 96.00% theoretical RTP modes.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "visual:smoke": "node tools/visual_smoke.mjs",
+    "rgs:acceptance": "node tools/rgs_acceptance.mjs",
+    "production:gates": "node tools/production_gates.mjs",
+    "release:manifest": "python ../release_tools.py",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run",
+    "assets:prepare": "python tools/prepare_assets.py",
+    "audio:generate": "python tools/import_legacy_audio.py",
+    "math:generate": "python ../run.py",
+    "math:verify": "python ../run.py --verify-only",
+    "verify": "npm run math:verify && npm run check && npm run test && npm run build && npm run production:gates && npm run release:manifest"
+  },
+  "dependencies": {
+    "stake-engine": "^0.1.32",
+    "svelte": "^5.35.6"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.1.0",
+    "@tsconfig/svelte": "^5.0.5",
+    "@types/node": "^24.0.14",
+    "playwright-core": "^1.62.0",
+    "svelte-check": "^4.2.2",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.4",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "presentationPlan": {
+    "type": "presentationPlan",
+    "seed": "5de4ed39",
+    "feature": "final_codicil",
+    "frames": 11,
+    "phases": [
+      "sealed_will",
+      "vault_echoes",
+      "midnight_seance"
+    ]
+  },
+  "featureIntro": {
+    "type": "featureIntro",
+    "label": "The Final Codicil",
+    "mode": "FINAL_CODICIL_BUY",
+    "feature": "final_codicil"
+  },
+  "reveal": {
+    "type": "reveal",
+    "board": [
+      [
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "PORTRAIT"
+        },
+        {
+          "name": "SCATTER",
+          "scatter": true
+        },
+        {
+          "name": "PORTRAIT"
+        }
+      ],
+      [
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        },
+        {
+          "name": "CROWN"
+        }
+      ],
+      [
+        {
+          "name": "RING"
+        },
+        {
+          "name": "SCATTER",
+          "scatter": true
+        },
+        {
+          "name": "RING"
+        },
+        {
+          "name": "RING"
+        }
+      ],
+      [
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        },
+        {
+          "name": "WATCH"
+        }
+      ],
+      [
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "LETTER"
+        },
+        {
+          "name": "SCATTER",
+          "scatter": true
+        }
+      ]
+    ],
+    "anticipation": [
+      0,
+      0,
+      1,
+      2,
+      3
+    ],
+    "gameType": "basegame"
+  },
+  "featureTrigger": {
+    "type": "featureTrigger",
+    "feature": "final_codicil",
+    "source": "feature_bet",
+    "positions": [
+      {
+        "reel": 0,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 4,
+        "row": 3
+      }
+    ]
+  },
+  "codicilFusion": {
+    "type": "codicilFusion",
+    "stages": [
+      "will",
+      "vault",
+      "seance"
+    ]
+  },
+  "freeSpinTrigger": {
+    "type": "freeSpinTrigger",
+    "feature": "will",
+    "totalFs": 5
+  },
+  "updateFreeSpin": {
+    "type": "updateFreeSpin",
+    "amount": 0,
+    "total": 5,
+    "stage": "will"
+  },
+  "expandWild": {
+    "type": "expandWild",
+    "reel": 2,
+    "originRow": 2,
+    "multiplier": 1,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "will"
+  },
+  "featureAward": {
+    "type": "featureAward",
+    "symbol": "WILD",
+    "amount": 5460,
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "stage": "will",
+    "evaluationSource": "sealedWillAward"
+  },
+  "winInfo": {
+    "type": "winInfo",
+    "totalWin": 5460,
+    "wins": [
+      {
+        "symbol": "WILD",
+        "kind": 4,
+        "ways": null,
+        "basePay": 5460,
+        "multiplier": 1,
+        "win": 5460,
+        "positions": [
+          {
+            "reel": 2,
+            "row": 0
+          },
+          {
+            "reel": 2,
+            "row": 1
+          },
+          {
+            "reel": 2,
+            "row": 2
+          },
+          {
+            "reel": 2,
+            "row": 3
+          }
+        ]
+      }
+    ],
+    "positions": [
+      {
+        "reel": 2,
+        "row": 0
+      },
+      {
+        "reel": 2,
+        "row": 1
+      },
+      {
+        "reel": 2,
+        "row": 2
+      },
+      {
+        "reel": 2,
+        "row": 3
+      }
+    ],
+    "gameType": "freegame",
+    "evaluationSource": "sealedWillAward"
+  },
+  "setWin": {
+    "type": "setWin",
+    "amount": 5460,
+    "winLevel": 8
+  },
+  "setTotalWin": {
+    "type": "setTotalWin",
+    "amount": 5460
+  },
+  "vaultState": {
+    "type": "vaultState",
+    "locks": 1,
+    "respins": 2,
+    "collected": 5450,
+    "stage": "vault"
+  },
+  "lockPrize": {
+    "type": "lockPrize",
+    "position": {
+      "reel": 2,
+      "row": 0
+    },
+    "value": 5450,
+    "stage": "vault"
+  },
+  "seancePossess": {
+    "type": "seancePossess",
+    "reels": [
+      3
+    ],
+    "multiplier": 1,
+    "stage": "seance"
+  },
+  "featureComplete": {
+    "type": "featureComplete",
+    "feature": "final_codicil",
+    "totalWin": 60000
+  },
+  "finalWin": {
+    "type": "finalWin",
+    "amount": 60000
+  }
+}
