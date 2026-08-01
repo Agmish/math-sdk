@@ -2,7 +2,7 @@
   "workingName": "The Inheritance",
   "frontendConfig": {
     "file": "fe_config.json",
-    "sha256": "12b9ff6bbf4c987f6c43074a56c47faabd3b7a2aae32c57449fa054635bf64b6"
+    "sha256": "5b1cb85426447472f5f068a6371231e341a8da5b05e564096d67ad075a38c503"
   },
   "gameID": "2_0_The_Inheritance",
   "rtp": 96.0,
@@ -11,7 +11,7 @@
   "providerNumber": 2,
   "standardForceFile": {
     "file": "force.json",
-    "sha256": "5313ec0f96551922a938f2f7c6d52378df717db400b7e44ff54ea22d77a7895d"
+    "sha256": "e36631428b7ddc1ce44f3d7a6d947cda205776bd918584eea5247083593a06d8"
   },
   "bookShelfConfig": [
     {
@@ -36,7 +36,7 @@
       },
       "forceFile": {
         "file": "force_record_BASE.json",
-        "sha256": "c59fd7ee8510463b934282bcdc3ec295e8eaa929e3e3a9e5e94960fccdffb44b"
+        "sha256": "8f1926e7e1efbb977c5b74d3231ccaaf92ab27065ebb5aabe6b45122e9fdcbda"
       }
     },
     {
@@ -61,7 +61,7 @@
       },
       "forceFile": {
         "file": "force_record_HEIRLOOM_ANTE.json",
-        "sha256": "ae9e55d72455159305c4ea904ef142a614becc23e83b99c2ae7ff369b8993e0b"
+        "sha256": "9540918bcbe493518812ad609e8f8f35519a15f26193677f95ac5bee6e83e4fc"
       }
     },
     {
@@ -86,7 +86,7 @@
       },
       "forceFile": {
         "file": "force_record_SEALED_WILL_BUY.json",
-        "sha256": "e3cc3889918a4e43fe79af024b7bce2d056107e9eba374dc3229744a5c34a36a"
+        "sha256": "f28dad326e29bb3ab98ce45a745fe49393bce6096b2b7eb6fe82eeaab332546a"
       }
     },
     {
@@ -111,7 +111,7 @@
       },
       "forceFile": {
         "file": "force_record_VAULT_ECHOES_BUY.json",
-        "sha256": "2188414427b33ace98c8253adf5b64b9d1a2f1247a4cec2dc118352a12b778a7"
+        "sha256": "d1f1b35dfba0ccef5118d1ee34b2cdd65301986081160a0249db287dc6e5cdc7"
       }
     },
     {
@@ -136,7 +136,7 @@
       },
       "forceFile": {
         "file": "force_record_MIDNIGHT_SEANCE_BUY.json",
-        "sha256": "c49fa84772a33635909a570a41942b7806dd4c340bc0cbbffd2c5f7c3918ad78"
+        "sha256": "99c97bc407d692c9079c1d38db39410bb3219ccfdb1328a219f266b7c50ae1da"
       }
     },
     {
@@ -161,7 +161,7 @@
       },
       "forceFile": {
         "file": "force_record_FINAL_CODICIL_BUY.json",
-        "sha256": "048c8637248bc13c141a9ecc935b3d62a2b44b8e8b3840144321ba8ffea9ff5f"
+        "sha256": "d863950f6614da7ab0e76bf003990c6803c24d0e8482f2d52547d37897ad89f8"
       }
     }
   ]

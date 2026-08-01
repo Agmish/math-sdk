@@ -26,6 +26,11 @@ CONTRACT_PATH = GAME_DIR / "game_contract.json"
 FRONTEND_FIXTURE_PATH = GAME_DIR / "frontend" / "src" / "lib" / "fixtures" / "published-books.json"
 
 
+def _write_json(path: Path, value: object) -> None:
+    """Write generated JSON with byte-stable LF line endings on every OS."""
+    path.write_text(json.dumps(value, indent=2), encoding="utf-8", newline="\n")
+
+
 def generate(book_count: int = BOOKS_PER_MODE) -> dict:
     """Build books, lookup tables, force data, configs, hashes, and release files."""
     for directory in (PUBLISH_DIR, CONFIG_DIR, FORCE_DIR, LOOKUP_DIR, RELEASE_DIR):
@@ -69,9 +74,7 @@ def generate(book_count: int = BOOKS_PER_MODE) -> dict:
         lookup_text = "".join(lookup_lines)
         lookup_path.write_text(lookup_text, encoding="utf-8", newline="")
         base_lookup_path.write_text(lookup_text, encoding="utf-8", newline="")
-        (CONFIG_DIR / f"event_config_{mode.name}.json").write_text(
-            json.dumps(event_examples, indent=2), encoding="utf-8"
-        )
+        _write_json(CONFIG_DIR / f"event_config_{mode.name}.json", event_examples)
 
         force_records = [
             {
@@ -81,9 +84,7 @@ def generate(book_count: int = BOOKS_PER_MODE) -> dict:
             }
             for criterion, book_ids in sorted(criteria_books.items())
         ]
-        (FORCE_DIR / f"force_record_{mode.name}.json").write_text(
-            json.dumps(force_records, indent=2), encoding="utf-8"
-        )
+        _write_json(FORCE_DIR / f"force_record_{mode.name}.json", force_records)
         force_index[mode.name] = {"criteria": sorted(criteria_books)}
 
         verification = {
@@ -91,9 +92,7 @@ def generate(book_count: int = BOOKS_PER_MODE) -> dict:
             "payout_hash": hashlib.md5(pickle.dumps(payouts)).hexdigest(),
             "num_entries": len(payouts),
         }
-        (CONFIG_DIR / f"books_{mode.name}.verification.json").write_text(
-            json.dumps(verification, indent=2), encoding="utf-8"
-        )
+        _write_json(CONFIG_DIR / f"books_{mode.name}.verification.json", verification)
         summaries[mode.name] = _mode_summary(mode, rows, books_path, lookup_path)
         frontend_fixtures[mode.name] = {
             item["criteria"]: item["book"]
@@ -101,7 +100,7 @@ def generate(book_count: int = BOOKS_PER_MODE) -> dict:
         }
 
     force_path = FORCE_DIR / "force.json"
-    force_path.write_text(json.dumps(force_index, indent=2), encoding="utf-8")
+    _write_json(force_path, force_index)
     _write_game_contract(summaries)
     _write_frontend_fixtures(frontend_fixtures)
     _write_configs(summaries, force_path)
@@ -113,7 +112,7 @@ def _write_frontend_fixtures(fixtures: dict) -> None:
     if not FRONTEND_FIXTURE_PATH.parent.parent.parent.exists():
         return
     FRONTEND_FIXTURE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    FRONTEND_FIXTURE_PATH.write_text(json.dumps(fixtures, indent=2), encoding="utf-8")
+    _write_json(FRONTEND_FIXTURE_PATH, fixtures)
 
 
 def _mode_summary(mode, rows, books_path: Path, lookup_path: Path) -> dict:
@@ -225,7 +224,7 @@ def _write_game_contract(summaries: dict) -> None:
             for mode in MODE_SPECS
         ],
     }
-    CONTRACT_PATH.write_text(json.dumps(contract, indent=2), encoding="utf-8")
+    _write_json(CONTRACT_PATH, contract)
 
 
 def _write_configs(summaries: dict, force_path: Path) -> None:
@@ -264,7 +263,7 @@ def _write_configs(summaries: dict, force_path: Path) -> None:
         ],
     }
     fe_path = CONFIG_DIR / "fe_config.json"
-    fe_path.write_text(json.dumps(fe_config, indent=2), encoding="utf-8")
+    _write_json(fe_path, fe_config)
     shutil.copy2(fe_path, CONFIG_DIR / "config_fe_2_0_The_Inheritance.json")
 
     shelf = []
@@ -298,22 +297,19 @@ def _write_configs(summaries: dict, force_path: Path) -> None:
         "standardForceFile": {"file": force_path.name, "sha256": sha256(force_path)},
         "bookShelfConfig": shelf,
     }
-    (CONFIG_DIR / "config.json").write_text(json.dumps(backend, indent=2), encoding="utf-8")
-    (CONFIG_DIR / "math_config.json").write_text(
-        json.dumps(
-            {
-                "game_id": "2_0_The_Inheritance",
-                "stateless": True,
-                "rtp": RTP,
-                "max_win": WIN_CAP,
-                "bet_modes": [
-                    {"bet_mode": mode.name, "cost": mode.cost, "rtp": RTP, "max_win": WIN_CAP}
-                    for mode in MODE_SPECS
-                ],
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
+    _write_json(CONFIG_DIR / "config.json", backend)
+    _write_json(
+        CONFIG_DIR / "math_config.json",
+        {
+            "game_id": "2_0_The_Inheritance",
+            "stateless": True,
+            "rtp": RTP,
+            "max_win": WIN_CAP,
+            "bet_modes": [
+                {"bet_mode": mode.name, "cost": mode.cost, "rtp": RTP, "max_win": WIN_CAP}
+                for mode in MODE_SPECS
+            ],
+        },
     )
 
     index = {
@@ -327,21 +323,18 @@ def _write_configs(summaries: dict, force_path: Path) -> None:
             for mode in MODE_SPECS
         ]
     }
-    (PUBLISH_DIR / "index.json").write_text(json.dumps(index, indent=2), encoding="utf-8")
-    (CONFIG_DIR / "generation_summary.json").write_text(json.dumps(summaries, indent=2), encoding="utf-8")
-    (CONFIG_DIR / "par_sheet.json").write_text(
-        json.dumps(
-            {
-                "gameID": "2_0_The_Inheritance",
-                "rtp": RTP,
-                "houseEdge": round(1 - RTP, 6),
-                "maxWin": WIN_CAP,
-                "weightScale": TOTAL_WEIGHT,
-                "modes": list(summaries.values()),
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
+    _write_json(PUBLISH_DIR / "index.json", index)
+    _write_json(CONFIG_DIR / "generation_summary.json", summaries)
+    _write_json(
+        CONFIG_DIR / "par_sheet.json",
+        {
+            "gameID": "2_0_The_Inheritance",
+            "rtp": RTP,
+            "houseEdge": round(1 - RTP, 6),
+            "maxWin": WIN_CAP,
+            "weightScale": TOTAL_WEIGHT,
+            "modes": list(summaries.values()),
+        },
     )
 
 
@@ -363,7 +356,7 @@ def _write_math_manifest() -> None:
             if path.is_file()
         ],
     }
-    (RELEASE_DIR / "math_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    _write_json(RELEASE_DIR / "math_manifest.json", manifest)
 
 
 def _remove_stale_publication_files() -> None:
