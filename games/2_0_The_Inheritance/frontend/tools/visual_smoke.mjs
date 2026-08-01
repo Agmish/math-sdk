@@ -84,7 +84,7 @@ await page.route('https://rgs.visual/**', async (route) => {
           amount: requestBody.amount,
           mode,
           payoutMultiplier,
-          state: book,
+          state: book.events,
         },
       }),
     });

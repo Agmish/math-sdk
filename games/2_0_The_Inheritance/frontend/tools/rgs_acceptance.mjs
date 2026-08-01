@@ -54,7 +54,7 @@ function authPayload() {
           active: true,
           mode: 'BASE',
           event: 'active-77',
-          state: book('positive'),
+          state: book('positive').events,
         }
       : null,
   };
@@ -81,9 +81,12 @@ await page.route('https://rgs.mock/**', async (route) => {
       headers,
       contentType: 'application/json',
       body: JSON.stringify({
-        payoutMultiplier: replayBook.payoutMultiplier / 100,
-        costMultiplier: 1,
-        state: replayBook,
+        round: {
+          betID: 99,
+          payoutMultiplier: replayBook.payoutMultiplier / 100,
+          costMultiplier: 1,
+          state: replayBook.events,
+        },
       }),
     });
     return;
@@ -123,7 +126,7 @@ await page.route('https://rgs.mock/**', async (route) => {
           active: false,
           mode: 'BASE',
           event: 'zero-78',
-          state: book('loss'),
+          state: book('loss').events,
         },
       }),
     });

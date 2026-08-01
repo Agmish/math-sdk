@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import publishedFixtures from './fixtures/published-books.json';
 import {
   DEFAULT_BET_AMOUNT,
   DEFAULT_BET_LEVELS,
@@ -35,7 +36,7 @@ describe('RGS mode play flow', () => {
   });
 
   it('uses every returned RGS bet level and restores the active-round amount', () => {
-    const book = createReplayBook('VAULT_ECHOES_BUY', 'VAULT_ECHOES_BUY-normal');
+    const published = publishedFixtures.VAULT_ECHOES_BUY.positive;
     const state = normalizeAuthenticateResponse({
       balance: { amount: 90_000_000, currency: 'CAD' },
       config: {
@@ -51,11 +52,12 @@ describe('RGS mode play flow', () => {
         disabledBuyFeature: true,
       },
       round: {
+        betID: 77,
         active: true,
         amount: 20_000,
         mode: 'VAULT_ECHOES_BUY',
-        state: book,
-        payoutMultiplier: book.payoutMultiplier,
+        state: published.events,
+        payoutMultiplier: published.payoutMultiplier / 100,
       },
     });
 
@@ -64,6 +66,10 @@ describe('RGS mode play flow', () => {
     expect(state.activeRound).toMatchObject({
       amount: 20_000,
       mode: 'VAULT_ECHOES_BUY',
+      book: {
+        id: '77',
+        published: true,
+      },
     });
     expect(state.socialCasino).toBe(true);
     expect(state.spacebarEnabled).toBe(false);
@@ -93,6 +99,33 @@ describe('RGS mode play flow', () => {
     await playRound('FINAL_CODICIL_BUY', 2_000_000, client);
 
     expect(calls).toEqual([{ amount: 2_000_000, mode: 'FINAL_CODICIL_BUY' }]);
+  });
+
+  it('accepts the production RGS round.state event array', async () => {
+    const published = publishedFixtures.BASE.positive;
+    const client = {
+      Authenticate: async () => ({}),
+      Play: async () => ({
+        balance: { amount: 990_000, currency: 'USD' },
+        round: {
+          betID: 912,
+          active: true,
+          mode: 'BASE',
+          payoutMultiplier: published.payoutMultiplier / 100,
+          state: published.events,
+        },
+      }),
+      EndRound: async () => ({ balance: { amount: 1_010_000, currency: 'USD' } }),
+    };
+
+    const result = await playRound('BASE', 10_000, client);
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    expect(result.book.id).toBe('912');
+    expect(result.book.published).toBe(true);
+    expect(result.book.payoutMultiplier).toBe(published.payoutMultiplier / 100);
+    expect(result.needsEndRound).toBe(true);
   });
 
   it('uses the weighted math table locally without forcing a winning feature', async () => {
