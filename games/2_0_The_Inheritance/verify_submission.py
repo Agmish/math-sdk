@@ -67,7 +67,9 @@ def verify_submission(expected_books: int = BOOKS_PER_MODE) -> dict:
         "results": results,
         "mathManifestSha256": sha256(RELEASE_DIR / "math_manifest.json"),
     }
-    (CONFIG_DIR / "submission_verification.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (CONFIG_DIR / "submission_verification.json").write_text(
+        json.dumps(report, indent=2), encoding="utf-8", newline="\n"
+    )
     return report
 
 
