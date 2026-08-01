@@ -15,7 +15,7 @@ type StakeClient = {
   Event?: (event: string) => Promise<unknown>;
 };
 
-type RoundState = SpinBook | { book?: SpinBook } | Record<string, unknown>;
+type RoundState = unknown;
 
 export type Balance = {
   amount: number;
@@ -233,10 +233,7 @@ export async function playRound(
 
   try {
     const response = await client.Play({ amount, mode });
-    const state = response.round?.state;
-    const book =
-      normalizeBookState(mode, state) ??
-      normalizeEventBook(mode, response.round?.events, response.round?.id ?? response.round?.betID);
+    const book = normalizeRoundBook(mode, response.round);
     if (!book) {
       throw new Error('RGS play response did not contain a supported event book.');
     }
@@ -305,28 +302,72 @@ export function normalizeEventBook(
   });
 }
 
-export function normalizeBookState(mode: GameModeId, state: RoundState | undefined): SpinBook | null {
-  if (!state) {
-    return null;
+export function normalizeRoundBook(mode: GameModeId, round: RgsRound | undefined): SpinBook | null {
+  if (!round) return null;
+  const roundId = round.id ?? round.betID;
+  return (
+    normalizeBookState(mode, round.state, roundId) ??
+    normalizeEventBook(mode, round.events, roundId)
+  );
+}
+
+export function normalizeBookState(
+  mode: GameModeId,
+  state: RoundState,
+  roundId?: string | number,
+): SpinBook | null {
+  return normalizeBookCandidate(mode, decodeJsonState(state), roundId, 0);
+}
+
+function normalizeBookCandidate(
+  mode: GameModeId,
+  value: unknown,
+  roundId: string | number | undefined,
+  depth: number,
+): SpinBook | null {
+  if (depth > 3 || value === null || value === undefined) return null;
+
+  if (Array.isArray(value)) {
+    return normalizeEventBook(mode, value, roundId);
   }
 
-  const maybeBook = 'book' in state ? state.book : null;
-  if (isSpinBook(maybeBook)) {
-    return maybeBook;
-  }
+  if (!value || typeof value !== 'object') return null;
+  if (isSpinBook(value)) return value;
 
-  if (isSpinBook(state)) {
-    return state;
-  }
-
-  const published = normalizePublishedBook(mode, state);
+  const published = normalizePublishedBook(mode, value);
   if (published) return published;
 
-  if (maybeBook) {
-    return normalizePublishedBook(mode, maybeBook);
+  const record = value as Record<string, unknown>;
+  const candidateId = scalarId(record.id) ?? scalarId(record.bookID) ?? roundId;
+  const directEvents = Array.isArray(record.events)
+    ? normalizeEventBook(mode, record.events, candidateId)
+    : null;
+  if (directEvents) return directEvents;
+
+  for (const key of ['book', 'state', 'result']) {
+    if (!(key in record)) continue;
+    const nested = decodeJsonState(record[key]);
+    if (nested === value) continue;
+    const normalized = normalizeBookCandidate(mode, nested, candidateId, depth + 1);
+    if (normalized) return normalized;
   }
 
   return null;
+}
+
+function decodeJsonState(value: unknown): unknown {
+  if (typeof value !== 'string') return value;
+  const source = value.trim();
+  if (!source.startsWith('{') && !source.startsWith('[')) return value;
+  try {
+    return JSON.parse(source) as unknown;
+  } catch {
+    return value;
+  }
+}
+
+function scalarId(value: unknown): string | number | undefined {
+  return typeof value === 'string' || typeof value === 'number' ? value : undefined;
 }
 
 function isSpinBook(value: unknown): value is SpinBook {
@@ -402,9 +443,7 @@ function normalizeRestoredRound(
     throw new Error(`Active RGS round uses unsupported mode "${round.mode}".`);
   }
 
-  const book =
-    normalizeBookState(round.mode, round.state) ??
-    normalizeEventBook(round.mode, round.events, round.id ?? round.betID);
+  const book = normalizeRoundBook(round.mode, round);
   if (!book) {
     throw new Error('Active RGS round could not be restored from its saved state.');
   }

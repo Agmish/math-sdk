@@ -71,15 +71,24 @@ export async function loadReplay(config: ReplayConfig): Promise<ReplayResult> {
       throw new Error(`Replay request failed with ${response.status}`);
     }
     const data = await response.json() as Record<string, unknown>;
-    const book = normalizeBookState(config.mode, data.state as Parameters<typeof normalizeBookState>[1]);
+    const round = recordValue(data.round);
+    const state = round?.state ?? data.state;
+    const roundId = scalarId(round?.id) ?? scalarId(round?.roundID) ?? scalarId(round?.betID) ?? config.event;
+    const book = normalizeBookState(config.mode, state, roundId ?? undefined);
     if (!book) {
       throw new Error('Replay response did not contain a supported event book.');
     }
-    const payoutValue = requiredMultiplier(data.payoutMultiplier, 'payoutMultiplier');
+    const payoutValue = requiredMultiplier(
+      round?.payoutMultiplier ?? data.payoutMultiplier,
+      'payoutMultiplier',
+    );
     const payoutMultiplier = Math.abs(payoutValue / 100 - book.payoutMultiplier) <= 1e-8
       ? payoutValue / 100
       : payoutValue;
-    const costMultiplier = requiredMultiplier(data.costMultiplier, 'costMultiplier');
+    const costMultiplier = requiredMultiplier(
+      round?.costMultiplier ?? data.costMultiplier,
+      'costMultiplier',
+    );
     if (Math.abs(book.payoutMultiplier - payoutMultiplier) > 1e-8) {
       throw new Error(
         `Replay payout mismatch: response ${payoutMultiplier}x, event book ${book.payoutMultiplier}x.`,
@@ -104,4 +113,14 @@ function requiredMultiplier(value: unknown, label: string): number {
     throw new Error(`Replay response has invalid ${label}.`);
   }
   return value;
+}
+
+function recordValue(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : null;
+}
+
+function scalarId(value: unknown): string | number | null {
+  return typeof value === 'string' || typeof value === 'number' ? value : null;
 }
