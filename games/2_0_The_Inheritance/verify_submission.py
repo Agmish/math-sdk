@@ -3,9 +3,11 @@
 import hashlib
 import io
 import json
+import os
 from collections import Counter, defaultdict
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, Iterator, List
 
 import zstandard as zstd
 
@@ -44,88 +46,18 @@ def verify_submission(expected_books: int = BOOKS_PER_MODE) -> dict:
     assert config["betDenomination"] == 100
     assert config["standardForceFile"]["sha256"] == sha256(FORCE_DIR / "force.json")
 
-    results = {}
-    for mode, index_mode, shelf in zip(MODE_SPECS, index["modes"], config["bookShelfConfig"]):
-        assert index_mode["name"] == shelf["name"] == mode.name
-        assert index_mode["cost"] == shelf["cost"] == mode.cost
-        books_path = PUBLISH_DIR / index_mode["events"]
-        lookup_path = PUBLISH_DIR / index_mode["weights"]
-        assert books_path.is_file() and lookup_path.is_file()
-        assert shelf["booksFile"]["sha256"] == sha256(books_path)
-        assert shelf["tables"][0]["sha256"] == sha256(lookup_path)
-        assert shelf["autoEndRoundDisabled"] is False
-
-        lookup = _read_lookup(lookup_path)
-        books = _read_books(books_path)
-        assert len(lookup) == len(books) == expected_books
-        assert [row[0] for row in lookup] == list(range(expected_books))
-        assert [book["id"] for book in books] == list(range(expected_books))
-        assert [row[2] for row in lookup] == [book["payoutMultiplier"] for book in books]
-
-        total_weight = sum(row[1] for row in lookup)
-        weighted_payout = sum(weight * payout for _, weight, payout in lookup)
-        exact_rtp = weighted_payout / total_weight / 100 / mode.cost
-        top_one_percent_average = _tail_average(lookup, mode.cost, 0.01)
-        distribution = defaultdict(int)
-        for _, weight, payout in lookup:
-            distribution[payout / 100] += weight
-        prob5k, prob10k, etl10k, etl40b, cvar = get_etl_cvar_p5k_10k_vales(
-            distribution, mode.cost, total_weight
-        )
-        assert total_weight == TOTAL_WEIGHT
-        assert weighted_payout == round(RTP * mode.cost * 100 * TOTAL_WEIGHT)
-        assert abs(exact_rtp - RTP) < 1e-12
-        assert max(row[2] for row in lookup) == round(WIN_CAP * 100)
-        assert all(weight > 0 for _, weight, _ in lookup)
-        assert all(payout >= 0 and payout % 10 == 0 for _, _, payout in lookup)
-        assert sum(1 for _, _, payout in lookup if payout > 0) >= 5
-        assert top_one_percent_average < 800
-        assert prob5k <= 0.01
-        assert prob10k <= 0.005
-        assert etl40b <= 0.9
-        assert etl10k <= 0.8
-        assert cvar <= 800
-
-        event_counts = Counter()
-        criteria = Counter()
-        review_samples = []
-        for book in books:
-            _verify_book(book)
-            criteria[book["criteria"]] += 1
-            event_counts.update(event["type"] for event in book["events"])
-            if book["payoutMultiplier"] > 0 and len(review_samples) < 5:
-                review_samples.append(
-                    {
-                        "bookId": book["id"],
-                        "criteria": book["criteria"],
-                        "payoutMultiplier": book["payoutMultiplier"] / 100,
-                        "finalEvent": book["events"][-1]["type"],
-                    }
-                )
-        assert REQUIRED_FEATURE_EVENTS.get(mode.name, set()).issubset(event_counts)
-        if mode.name in {"BASE", "HEIRLOOM_ANTE"}:
-            assert event_counts["expandWild"] > 0
-            assert event_counts["featureTrigger"] > 0
-
-        results[mode.name] = {
-            "books": len(books),
-            "weight": total_weight,
-            "rtp": f"{exact_rtp * 100:.2f}%",
-            "maxWin": f"{max(row[2] for row in lookup) / 100:.2f}x",
-            "topOnePercentAverage": f"{top_one_percent_average:.4f}x stake",
-            "threeStarVolatility": {
-                "prob5k": round(prob5k, 6),
-                "prob10k": round(prob10k, 6),
-                "etl40b": round(etl40b, 6),
-                "etl10k": round(etl10k, 6),
-                "cvar": round(cvar, 6),
-                "status": "PASS",
-            },
-            "criteria": dict(sorted(criteria.items())),
-            "eventTypes": sorted(event_counts),
-            "reviewSamples": review_samples,
-            "sha256": sha256(books_path),
-        }
+    tasks = [
+        (mode, index_mode, shelf, expected_books)
+        for mode, index_mode, shelf in zip(MODE_SPECS, index["modes"], config["bookShelfConfig"])
+    ]
+    configured_workers = int(os.environ.get("INHERITANCE_VERIFY_WORKERS", os.cpu_count() or 1))
+    worker_count = max(1, min(len(tasks), configured_workers))
+    if worker_count == 1:
+        mode_results = map(_verify_mode, tasks)
+        results = dict(mode_results)
+    else:
+        with ProcessPoolExecutor(max_workers=worker_count) as executor:
+            results = dict(executor.map(_verify_mode, tasks))
 
     report = {
         "status": "PASS",
@@ -139,6 +71,93 @@ def verify_submission(expected_books: int = BOOKS_PER_MODE) -> dict:
     return report
 
 
+def _verify_mode(task: tuple) -> tuple[str, dict]:
+    """Verify one complete mode; modes run independently across CPU processes."""
+    mode, index_mode, shelf, expected_books = task
+    assert index_mode["name"] == shelf["name"] == mode.name
+    assert index_mode["cost"] == shelf["cost"] == mode.cost
+    books_path = PUBLISH_DIR / index_mode["events"]
+    lookup_path = PUBLISH_DIR / index_mode["weights"]
+    assert books_path.is_file() and lookup_path.is_file()
+    assert shelf["booksFile"]["sha256"] == sha256(books_path)
+    assert shelf["tables"][0]["sha256"] == sha256(lookup_path)
+    assert shelf["autoEndRoundDisabled"] is False
+
+    lookup = _read_lookup(lookup_path)
+    assert len(lookup) == expected_books
+    assert all(row[0] == expected_id for expected_id, row in enumerate(lookup))
+
+    total_weight = sum(row[1] for row in lookup)
+    weighted_payout = sum(weight * payout for _, weight, payout in lookup)
+    exact_rtp = weighted_payout / total_weight / 100 / mode.cost
+    top_one_percent_average = _tail_average(lookup, mode.cost, 0.01)
+    distribution = defaultdict(int)
+    for _, weight, payout in lookup:
+        distribution[payout / 100] += weight
+    prob5k, prob10k, etl10k, etl40b, cvar = get_etl_cvar_p5k_10k_vales(
+        distribution, mode.cost, total_weight
+    )
+    assert total_weight == TOTAL_WEIGHT
+    assert weighted_payout == round(RTP * mode.cost * 100 * TOTAL_WEIGHT)
+    assert abs(exact_rtp - RTP) < 1e-12
+    assert max(row[2] for row in lookup) == round(WIN_CAP * 100)
+    assert all(weight > 0 for _, weight, _ in lookup)
+    assert all(payout >= 0 and payout % 10 == 0 for _, _, payout in lookup)
+    assert sum(1 for _, _, payout in lookup if payout > 0) >= 5
+    assert top_one_percent_average < 800
+    assert prob5k <= 0.01
+    assert prob10k <= 0.005
+    assert etl40b <= 0.9
+    assert etl10k <= 0.8
+    assert cvar <= 800
+
+    event_counts = Counter()
+    criteria = Counter()
+    review_samples = []
+    book_count = 0
+    for book_count, book in enumerate(_iter_books(books_path), start=1):
+        expected_id, _, expected_payout = lookup[book_count - 1]
+        assert book["id"] == expected_id == book_count - 1
+        assert book["payoutMultiplier"] == expected_payout
+        _verify_book(book)
+        criteria[book["criteria"]] += 1
+        event_counts.update(event["type"] for event in book["events"])
+        if book["payoutMultiplier"] > 0 and len(review_samples) < 5:
+            review_samples.append(
+                {
+                    "bookId": book["id"],
+                    "criteria": book["criteria"],
+                    "payoutMultiplier": book["payoutMultiplier"] / 100,
+                    "finalEvent": book["events"][-1]["type"],
+                }
+            )
+    assert book_count == expected_books
+    assert REQUIRED_FEATURE_EVENTS.get(mode.name, set()).issubset(event_counts)
+    if mode.name in {"BASE", "HEIRLOOM_ANTE"}:
+        assert event_counts["expandWild"] > 0
+        assert event_counts["featureTrigger"] > 0
+
+    return mode.name, {
+        "books": book_count,
+        "weight": total_weight,
+        "rtp": f"{exact_rtp * 100:.2f}%",
+        "maxWin": f"{max(row[2] for row in lookup) / 100:.2f}x",
+        "topOnePercentAverage": f"{top_one_percent_average:.4f}x stake",
+        "threeStarVolatility": {
+            "prob5k": round(prob5k, 6),
+            "prob10k": round(prob10k, 6),
+            "etl40b": round(etl40b, 6),
+            "etl10k": round(etl10k, 6),
+            "cvar": round(cvar, 6),
+            "status": "PASS",
+        },
+        "criteria": dict(sorted(criteria.items())),
+        "eventTypes": sorted(event_counts),
+        "reviewSamples": review_samples,
+        "sha256": sha256(books_path),
+    }
+
+
 def _read_lookup(path: Path) -> List[tuple]:
     rows = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -147,23 +166,22 @@ def _read_lookup(path: Path) -> List[tuple]:
     return rows
 
 
-def _read_books(path: Path) -> List[dict]:
-    books = []
+def _iter_books(path: Path) -> Iterator[dict]:
+    """Decode one book at a time so large releases never exhaust CI memory."""
     with path.open("rb") as source, zstd.ZstdDecompressor().stream_reader(source) as reader:
         text_stream = io.TextIOWrapper(reader, encoding="utf-8")
         for line in text_stream:
             if line.strip():
-                books.append(json.loads(line))
-    return books
+                yield json.loads(line)
 
 
 def _verify_book(book: Dict) -> None:
     assert isinstance(book["id"], int)
     assert isinstance(book["payoutMultiplier"], int)
     assert book["resultMeta"]["stateless"] is True
-    assert "persistent" not in json.dumps(book).lower()
+    assert not _contains_persistent_text(book)
     events = book["events"]
-    assert events and [event["index"] for event in events] == list(range(len(events)))
+    assert events and all(event["index"] == index for index, event in enumerate(events))
     assert events[-1]["type"] == "finalWin"
     assert events[-1]["amount"] == book["payoutMultiplier"]
     totals = [event["amount"] for event in events if event["type"] == "setTotalWin"]
@@ -231,6 +249,22 @@ def _verify_book(book: Dict) -> None:
         elif event["type"] == "setTotalWin":
             assert event["amount"] == running_total
     assert running_total == book["payoutMultiplier"]
+
+
+def _contains_persistent_text(value: object) -> bool:
+    """Match the prior serialized-text guard without re-encoding every book."""
+    pending = [value]
+    while pending:
+        current = pending.pop()
+        if isinstance(current, dict):
+            if any("persistent" in str(key).lower() for key in current):
+                return True
+            pending.extend(current.values())
+        elif isinstance(current, list):
+            pending.extend(current)
+        elif isinstance(current, str) and "persistent" in current.lower():
+            return True
+    return False
 
 
 def _tail_average(lookup: List[tuple], cost: float, fraction: float) -> float:
