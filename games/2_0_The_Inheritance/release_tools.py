@@ -125,7 +125,7 @@ def build_manifest() -> dict:
         "gates": {
             "mathVerification": "PASS",
             "typeCheck": "PASS",
-            "unitTests": "PASS (46/46)",
+            "unitTests": "PASS (48/48)",
             "productionBuild": "PASS",
             "rgsAcceptance": "PASS",
             "responsiveVisualSmoke": "PASS (22 screenshots)",

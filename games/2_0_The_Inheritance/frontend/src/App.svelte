@@ -297,40 +297,40 @@
       anticipating = false;
       motion = 'spinning';
       playSound('spin', muted);
-      await wait(160);
+      await wait(235);
 
       for (let reel = 0; reel < 5; reel += 1) {
         if (token !== runToken) return;
         if (frame.expandingWild && frame.expandingWild.reel === reel && reel >= 3) {
           anticipating = true;
           playSound('tease', muted, 0.82);
-          await wait(110);
+          await wait(190);
         }
         stoppingReel = reel;
         playSound('reelStop', muted, 0.88 + reel * 0.025);
-        await wait(58 + (anticipating ? 22 : 0));
+        await wait(92 + reel * 8 + (anticipating ? 38 : 0));
       }
 
       if (token !== runToken) return;
       motion = 'landed';
       anticipating = false;
-      await wait(frame.expandingWild ? 125 : 78);
+      await wait(frame.expandingWild ? 190 : 125);
 
       if (frame.phase === 'vault' && frame.winPositions.length > 0) {
         motion = 'locking';
         const lockCount = Math.min(4, frame.winPositions.length);
         for (let lockIndex = 0; lockIndex < lockCount; lockIndex += 1) {
           playSound('lock', muted, 0.85 + lockIndex * 0.04);
-          await wait(54);
+          await wait(90);
         }
-        await wait(100);
+        await wait(150);
       }
 
       if (frame.expandingWild) {
         motion = 'expanding';
         duckMusic(0.42, 720);
         playSound(frame.expandingWild.kind === 'spirit' ? 'seance' : 'wild', muted);
-        await wait(520);
+        await wait(760);
       }
 
       if (token !== runToken) return;

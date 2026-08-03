@@ -123,6 +123,8 @@
               locking={motion === 'locking' && isMarked(reelIndex, rowIndex, frame.winPositions)}
               dimmed={dimUnmatched && !isMarked(reelIndex, rowIndex, frame.winPositions)}
               prizeValue={frame.prizeValues[`${reelIndex}:${rowIndex}`]}
+              {reelIndex}
+              {rowIndex}
             />
           {/each}
         </div>
@@ -136,6 +138,8 @@
             aria-label={`${frame.expandingWild?.kind === 'spirit' && frame.expandingWild.reel === reelIndex ? 'Possessed' : 'Wax Seal'} Wild reel ${reelIndex + 1}`}
           >
             <span class="wax-fill"></span>
+            <span class="wild-surge wild-surge-one" aria-hidden="true"></span>
+            <span class="wild-surge wild-surge-two" aria-hidden="true"></span>
             <span class="wild-rays" aria-hidden="true"></span>
             <img
                 src={frame.expandingWild?.kind === 'spirit' && frame.expandingWild.reel === reelIndex ? assetUrl('symbols/seance-mirror.webp') : assetUrl('symbols/wax-wild.webp')}
