@@ -14,7 +14,7 @@
     "eventPayoutScale": 100
   },
   "buildVersion": "1.0.0",
-  "sourceBaseRevision": "d7f1fa70804c035df70c8f4cc958781d522e9178",
+  "sourceBaseRevision": "63f64bb070966e47f2f984461b14494a91b63d61",
   "publication": {
     "math": "games/2_0_The_Inheritance/library/publish_files",
     "frontend": "games/2_0_The_Inheritance/frontend/dist"
@@ -69,13 +69,13 @@
   },
   "checklistEvidence": {
     "path": "docs/STAKE_ENGINE_59_CHECKLIST.md",
-    "size": 7922,
-    "sha256": "88309b53a7b26cbcd3807d679cb30bde3d9bea16422d9653bf0c79128add1686"
+    "size": 8070,
+    "sha256": "b8f9c8edae1647b92fea13db55754135412ec9c180de8d1a332eaf7fa51d188b"
   },
   "gates": {
     "mathVerification": "PASS",
     "typeCheck": "PASS",
-    "unitTests": "PASS (46/46)",
+    "unitTests": "PASS (48/48)",
     "productionBuild": "PASS",
     "rgsAcceptance": "PASS",
     "responsiveVisualSmoke": "PASS (22 screenshots)"
@@ -294,19 +294,19 @@
       "sha256": "249777a9ae2fd7e99a934410ee41fec0e9d108964489fbc4f55651642dcdbbcd"
     },
     {
-      "path": "frontend/dist/assets/index-Bf7Ceq3B.js",
-      "size": 154032,
-      "sha256": "beb41b2f13cbd0c6ba397e8ba1b32101399cd3a48bb9d4387cd547c0fc1aaa61"
-    },
-    {
-      "path": "frontend/dist/assets/index-DE1FpsTN.css",
-      "size": 72049,
-      "sha256": "461825a2188a1c8c3704cd7f85587b373e18fb1c203b9c92286ebd94541aa326"
+      "path": "frontend/dist/assets/index-BuqAPS1T.js",
+      "size": 156135,
+      "sha256": "227b7176a452e242301ee2f47c2068238f70e46f23e0e2f22476ef2976ef1bad"
     },
     {
       "path": "frontend/dist/assets/index-gjIXi295.js",
       "size": 6218,
       "sha256": "241be3dbe58af719dd03492c9238474af05a006bd542d234c5e15c221cd3ce92"
+    },
+    {
+      "path": "frontend/dist/assets/index-SGzi2waI.css",
+      "size": 98269,
+      "sha256": "1df23179649631136266eb3029faa0b684f4cfcac6bd4b09d3152e1a3cad5cb3"
     },
     {
       "path": "frontend/dist/assets/marketing/the-inheritance-thumbnail-master.png",
@@ -400,8 +400,8 @@
     },
     {
       "path": "frontend/dist/index.html",
-      "size": 765,
-      "sha256": "4c94cd720c695b25438a10eb364517667b07f96f2aac267b95331b5042b18df1"
+      "size": 786,
+      "sha256": "d608c9f42fed531d8a23a2045348baa365a4b85cf0ab159dbaa7a6121765e6ce"
     }
   ]
 }

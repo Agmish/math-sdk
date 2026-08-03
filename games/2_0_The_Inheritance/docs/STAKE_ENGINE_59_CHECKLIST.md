@@ -9,7 +9,7 @@ This matrix separates evidence produced by the repository from actions only Stak
 | 3 | Spin control sends Play | PASS | Acceptance test records exactly one `/wallet/play` request. |
 | 4 | No Stake Engine Loader | PASS | `release_tools.py` scans the production build for the loader string. |
 | 5 | Unique title and no restricted title terms | READY | Title is `The Inheritance`; final uniqueness review belongs to Stake compliance. |
-| 6 | Appropriate assets and imagery | PASS | Original Blackthorn estate artwork was visually reviewed in the 22-shot smoke set. |
+| 6 | Appropriate assets and imagery | PASS | Original Blackthorn estate artwork is rendered at full picture-symbol resolution with a dedicated clarity/contrast treatment and was reviewed in the 22-shot desktop, popout, mobile, feature, Wild-expansion, and win-state smoke set. |
 | 7 | Sufficiently distinct title and series | READY | Original contract, symbols, layout, and feature art are supplied; Stake makes the final catalogue comparison. |
 | 8 | Thumbnail meets artwork guidelines | READY | Square high-resolution master: `frontend/public/assets/marketing/the-inheritance-thumbnail-master.png`; run the ACP artwork validator before publishing. |
 | 9 | Uses all Authenticate betting parameters | PASS | Unit and RGS tests cover `minBet`, `maxBet`, `stepBet`, `defaultBetLevel`, and the exact `betLevels` array. |

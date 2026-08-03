@@ -1,5 +1,6 @@
 import './app.css';
 import './overlays.css';
+import './review-polish.css';
 import { mount } from 'svelte';
 import App from './App.svelte';
 
